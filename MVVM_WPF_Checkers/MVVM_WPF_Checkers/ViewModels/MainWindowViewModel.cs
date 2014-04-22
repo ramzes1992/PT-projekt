@@ -58,7 +58,7 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         private bool CanExecuteStopWebCam()
         {
-            return true;
+            return (_testService != null) ? _testService.IsRunning : false;
         }
 
         #endregion

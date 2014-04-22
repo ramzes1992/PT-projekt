@@ -14,6 +14,13 @@ namespace MVVM_WPF_Checkers.Services
     {
         public event BoardChangedEventHandler BoardChanged;
         public delegate void BoardChangedEventHandler(object sender, FieldState[,] board);
+        public bool IsRunning
+        {
+            get
+            {
+                return (_worker != null) ? _worker.IsBusy : false;
+            }
+        }
 
         private FieldState[,] _board;
         private BackgroundWorker _worker;
