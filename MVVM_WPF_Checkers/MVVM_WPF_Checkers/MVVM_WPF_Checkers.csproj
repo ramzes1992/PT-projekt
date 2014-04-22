@@ -82,6 +82,7 @@
     <Compile Include="Helpers\NotificationObject.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\FieldsState.cs" />
+    <Compile Include="Services\ExampleService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -121,6 +122,10 @@
     <Resource Include="Views\Images\GreenPawn.png" />
     <Resource Include="Views\Images\RedPawn.png" />
     <Resource Include="Views\Images\YellowPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Images\testChess1.jpg" />
+    <Resource Include="Views\Images\testChess2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

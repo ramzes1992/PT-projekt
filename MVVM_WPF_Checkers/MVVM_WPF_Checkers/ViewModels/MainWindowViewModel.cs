@@ -4,6 +4,8 @@ using System.Windows.Input;
 using MVVM_WPF_Checkers.Helpers;
 using MVVM_WPF_Checkers.Models;
 using MVVM_WPF_Checkers.Services;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace MVVM_WPF_Checkers.ViewModels
 {
@@ -29,6 +31,24 @@ namespace MVVM_WPF_Checkers.ViewModels
             }
         }
 
+        private string _imageSource;
+        public string ImageSource
+        {
+            get
+            {
+                return _imageSource;
+            }
+
+            set
+            {
+                if (_imageSource != value)
+                {
+                    _imageSource = value;
+                    RaisePropertyChanged(() => ImageSource);
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -45,6 +65,7 @@ namespace MVVM_WPF_Checkers.ViewModels
             if (_testService != null)
             {
                 _testService.RunServiceAsync();
+                _exampleService.RunServiceAsync();//do wyjebania(tylko test)
             }
         }
 
@@ -53,6 +74,7 @@ namespace MVVM_WPF_Checkers.ViewModels
             if (_testService != null)
             {
                 _testService.CancelServiceAsync();
+                _exampleService.CancelServiceAsync();//do wyjebania (tylko test)
             }
         }
 
@@ -75,8 +97,11 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             _testService = new TestService();
             _testService.BoardChanged += _testService_BoardChanged;
+
+            _exampleService = new ExampleService();
+            _exampleService.ImageChanged += _exampleService_ImageChanged;
         }
-        void _testService_BoardChanged(object sender, FieldState[,] board)
+        private void _testService_BoardChanged(object sender, FieldState[,] board)
         {
             this.Board = new ObservableCollection<FieldState>();
             foreach (var state in board)
@@ -84,10 +109,23 @@ namespace MVVM_WPF_Checkers.ViewModels
                 this.Board.Add(state);
             }
         }
+        private void _exampleService_ImageChanged(object sender, int args)
+        {
+            if (args % 2 == 0)
+            {
+                this.ImageSource = "Images/testChess2.jpg";//new BitmapImage(new Uri("Images/testChess2.jpg", UriKind.Relative));
+            }
+            else
+            {
+                this.ImageSource = "Images/testChess1.jpg";//new BitmapImage(new Uri("Images/testChess1.jpg", UriKind.Relative));
+            }
+        }
         #endregion
 
         #endregion
 
         private TestService _testService;
+        private ExampleService _exampleService;
+        
     }
 }

@@ -62,14 +62,14 @@ namespace MVVM_WPF_Checkers.Services
                 }
                 else
                 {
-                    RiseBoardChangedEvent();
+                    RaiseBoardChangedEvent();
                 }
 
             }
         }
         private void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.WriteLine("Worker has Stopped");
+            Console.WriteLine("TestServiceWorker has Stopped");
         }
         #endregion
 
@@ -80,7 +80,7 @@ namespace MVVM_WPF_Checkers.Services
             if (_worker != null)
             {
                 _worker.RunWorkerAsync();
-                Console.WriteLine("Worker has Started");
+                Console.WriteLine("TestServiceWorker has Started");
             }
         }
         public void CancelServiceAsync()
@@ -91,7 +91,7 @@ namespace MVVM_WPF_Checkers.Services
             }
         }
 
-        private void RiseBoardChangedEvent()
+        private void RaiseBoardChangedEvent()
         {
             if (BoardChanged != null)
             {
