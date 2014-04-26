@@ -1,0 +1,48 @@
+﻿<Window x:Class="TestBoard_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Title="MainWindow" Height="600" Width="800" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Szymon" Click="Button_Click"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
+            <ListBox Name="v_ListBox_Board" ItemsSource="{Binding}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionChanged="v_ListBox_Board_SelectionChanged" SelectionMode="Single">
+                <!--<ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Focusable" Value="False"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>-->
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" ItemHeight="43" ItemWidth="43" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="346" MaxWidth="364">
+                            <WrapPanel.Resources>
+                                <Style TargetType="Image">
+                                    <Setter Property="Width" Value="30" />
+                                    <Setter Property="Height" Value="30" />
+                                    <Setter Property="Margin" Value="0" />
+                                </Style>
+                            </WrapPanel.Resources>
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <!--<WrapPanel Grid.Column="1" Orientation="Horizontal" ItemHeight="43" ItemWidth="43" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346">
+                <WrapPanel.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="30" />
+                        <Setter Property="Height" Value="30" />
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </WrapPanel.Resources>
+            </WrapPanel>-->
+        </Grid>
+    </Grid>
+</Window>
