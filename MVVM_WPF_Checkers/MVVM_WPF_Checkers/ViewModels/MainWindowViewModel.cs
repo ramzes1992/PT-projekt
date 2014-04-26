@@ -100,6 +100,8 @@ namespace MVVM_WPF_Checkers.ViewModels
 
             _exampleService = new ExampleService();
             _exampleService.ImageChanged += _exampleService_ImageChanged;
+
+            _webCamService = new WebCamService();
         }
         private void _testService_BoardChanged(object sender, FieldState[,] board)
         {
@@ -126,6 +128,7 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         private TestService _testService;
         private ExampleService _exampleService;
+        private WebCamService _webCamService;
         
     }
 }
