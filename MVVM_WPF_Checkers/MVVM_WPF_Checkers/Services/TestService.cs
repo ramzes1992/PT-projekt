@@ -88,6 +88,7 @@ namespace MVVM_WPF_Checkers.Services
             if (_worker != null)
             {
                 _worker.CancelAsync();
+                Console.WriteLine("WebCamService was canceled");
             }
         }
 

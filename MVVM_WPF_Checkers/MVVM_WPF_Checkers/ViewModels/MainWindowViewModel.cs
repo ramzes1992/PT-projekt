@@ -6,6 +6,7 @@ using MVVM_WPF_Checkers.Models;
 using MVVM_WPF_Checkers.Services;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Drawing;
 
 namespace MVVM_WPF_Checkers.ViewModels
 {
@@ -31,24 +32,23 @@ namespace MVVM_WPF_Checkers.ViewModels
             }
         }
 
-        private string _imageSource;
-        public string ImageSource
+        private Bitmap _imageFrame;
+        public Bitmap ImageFrame
         {
             get
             {
-                return _imageSource;
+                return _imageFrame;
             }
 
             set
             {
-                if (_imageSource != value)
+                if (_imageFrame != value)
                 {
-                    _imageSource = value;
-                    RaisePropertyChanged(() => ImageSource);
+                    _imageFrame = value;
+                    RaisePropertyChanged(() => ImageFrame);
                 }
             }
         }
-
         #endregion
 
         #region Commands
@@ -62,25 +62,33 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         private void OnRunWebCam()
         {
-            if (_testService != null)
+            if (_testService != null) // TODO caly ten warunek do wyjebania
             {
                 _testService.RunServiceAsync();
-                _exampleService.RunServiceAsync();//do wyjebania(tylko test)
+            }
+
+            if (_webCamService != null)
+            {
+                _webCamService.RunWServiceAsync();
             }
         }
 
         private void OnStopWebCam()
         {
-            if (_testService != null)
+            if (_testService != null) // TODO ca³y ten warunek do wyjebania
             {
                 _testService.CancelServiceAsync();
-                _exampleService.CancelServiceAsync();//do wyjebania (tylko test)
+            }
+
+            if (_webCamService != null)
+            {
+                _webCamService.CancelServiceAsync();
             }
         }
 
         private bool CanExecuteStopWebCam()
         {
-            return (_testService != null) ? _testService.IsRunning : false;
+            return (_webCamService != null) ? _webCamService.IsRunning : false;
         }
 
         #endregion
@@ -98,10 +106,13 @@ namespace MVVM_WPF_Checkers.ViewModels
             _testService = new TestService();
             _testService.BoardChanged += _testService_BoardChanged;
 
-            _exampleService = new ExampleService();
-            _exampleService.ImageChanged += _exampleService_ImageChanged;
-
             _webCamService = new WebCamService();
+            _webCamService.ImageChanged += _webCamService_ImageChanged;
+        }
+
+        private void _webCamService_ImageChanged(object sender, System.Drawing.Bitmap image)
+        {
+            this.ImageFrame = image;
         }
         private void _testService_BoardChanged(object sender, FieldState[,] board)
         {
@@ -111,24 +122,14 @@ namespace MVVM_WPF_Checkers.ViewModels
                 this.Board.Add(state);
             }
         }
-        private void _exampleService_ImageChanged(object sender, int args)
-        {
-            if (args % 2 == 0)
-            {
-                this.ImageSource = "Images/testChess2.jpg";//new BitmapImage(new Uri("Images/testChess2.jpg", UriKind.Relative));
-            }
-            else
-            {
-                this.ImageSource = "Images/testChess1.jpg";//new BitmapImage(new Uri("Images/testChess1.jpg", UriKind.Relative));
-            }
-        }
         #endregion
 
         #endregion
 
+
+        #region Members
         private TestService _testService;
-        private ExampleService _exampleService;
         private WebCamService _webCamService;
-        
+        #endregion
     }
 }

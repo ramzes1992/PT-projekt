@@ -39,11 +39,16 @@ namespace MVVM_WPF_Checkers.Services
         public void RunWServiceAsync()
         {
             _worker.RunWorkerAsync();
+            Console.WriteLine("WebCamService has started");
         }
 
         public void CancelServiceAsync()
         {
-            _worker.CancelAsync();
+            if (_worker != null)
+            {
+                _worker.CancelAsync();
+                Console.WriteLine("WebCamService was canceled");
+            }
         }
         #endregion
 
@@ -74,26 +79,29 @@ namespace MVVM_WPF_Checkers.Services
         }
         void _worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Image<Bgr, Byte> ImageFrame = capture.QueryFrame().Copy();  //line 1
-            //Image<Gray, Byte> ImageFrame = capture.QueryGrayFrame();  //line 1
-            //CamImageBox.Image = ImageFrame;        //line 2
-
-            /*
-            int wysokosc = ImageFrame.Height;
-            int szerokosc = ImageFrame.Width;
-            for (int i = 0; i < ImageFrame.Height; i++)
+            while (!_worker.CancellationPending)
             {
-                for (int j = 0; j < ImageFrame.Width; j++)
-                {
+                Image<Bgr, Byte> ImageFrame = capture.QueryFrame().Copy();  //line 1
+                //Image<Gray, Byte> ImageFrame = capture.QueryGrayFrame();  //line 1
+                //CamImageBox.Image = ImageFrame;        //line 2
 
-                }
-            }*/
-            //CamImageBox.Image = ImageFrame;
-            RaiseImageChangedEvent(ImageFrame.ToBitmap());
+                /*
+                int wysokosc = ImageFrame.Height;
+                int szerokosc = ImageFrame.Width;
+                for (int i = 0; i < ImageFrame.Height; i++)
+                {
+                    for (int j = 0; j < ImageFrame.Width; j++)
+                    {
+
+                    }
+                }*/
+                //CamImageBox.Image = ImageFrame;
+                RaiseImageChangedEvent(ImageFrame.ToBitmap());
+            }
         }
         void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //throw new NotImplementedException();
+            Console.WriteLine("WebCamService has stopped");
         }
         #endregion
 
