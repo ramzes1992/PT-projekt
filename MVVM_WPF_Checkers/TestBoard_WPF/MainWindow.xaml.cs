@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MVVM_WPF_Checkers.Models;
+
 namespace TestBoard_WPF
 {
     /// <summary>
@@ -136,6 +138,7 @@ namespace TestBoard_WPF
                 message += "\n";
             }
 
+            //Tutaj Wywolanie logiki z LogicModel;
             MessageBox.Show(message);
         }
     }

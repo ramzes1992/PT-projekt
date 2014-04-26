@@ -101,6 +101,12 @@
     <Resource Include="Images\RedPawn.png" />
     <Resource Include="Images\YellowPawn.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVM_WPF_Checkers\MVVM_WPF_Checkers.csproj">
+      <Project>{6a23e5ba-99da-47ef-a6fa-87df531e4158}</Project>
+      <Name>MVVM_WPF_Checkers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
