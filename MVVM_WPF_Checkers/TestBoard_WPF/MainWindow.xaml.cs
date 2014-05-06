@@ -119,6 +119,12 @@ namespace TestBoard_WPF
                 }
         }
 
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
+            _testLogic.UpdateBoard(boardArrayToFieldState());
+        }
+
         private void Button_Init_Click(object sender, RoutedEventArgs e)
         {
             Clear();
@@ -172,7 +178,7 @@ namespace TestBoard_WPF
         private void TestLog(string text)
         {
             var oldLog = _messageLog;
-            _messageLog = String.Format("[{0}] {1} \n{2}", _messageLogCounter++, text, oldLog);
+            _messageLog = String.Format("{0}: {1} \n{2}", ++_messageLogCounter, text, oldLog);
             v_TextBlock_Test.Text = _messageLog;
         }
     }

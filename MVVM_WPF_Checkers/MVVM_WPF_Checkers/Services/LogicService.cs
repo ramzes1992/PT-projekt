@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using MVVM_WPF_Checkers.Models;
 
 namespace MVVM_WPF_Checkers.Services
@@ -19,6 +18,13 @@ namespace MVVM_WPF_Checkers.Services
                 _boardArray = value;
             }
         }
+
+        public LogicService()
+        {
+            _boardArray = new FieldState[8, 8];
+            _previousBoardArray = new FieldState[8, 8];
+        }
+
 
         public void UpdateBoard(FieldState[,] boardArray)
         {
@@ -50,22 +56,19 @@ namespace MVVM_WPF_Checkers.Services
 
         public string Validete()
         {
-            const string message = "Invalid move";
             var diff = GetDiff();
+            string message = "Invalid move";
+            foreach (var pawn in diff)
+                message += String.Format(" {0}", pawn);
             if (diff.Count == 0) return null;
             if (diff.Count != 2) return message;
             if (!ValidateMovePawn(diff)) return message;
-            //var message = ValidateCountDiff(diff);
-            //if (message != null) return message;
-            //message = ValidateMovePawn();
 
             return null;
         }
 
         private bool ValidateMovePawn(List<Pawn> diff)
         {
-            string message = null;
-
             var oldPawnPossition = diff.FirstOrDefault(pawn => pawn.CurrentState == FieldState.Empty);
             var newPawnPossition = diff.FirstOrDefault(pawn => pawn.CurrentState != FieldState.Empty && pawn.PreviousState == FieldState.Empty);
 
@@ -74,57 +77,13 @@ namespace MVVM_WPF_Checkers.Services
             var x = newPawnPossition.X - oldPawnPossition.X;
             var y = newPawnPossition.Y - oldPawnPossition.Y;
 
-            if (Math.Abs(x) != 1) return false;
+            if (!(newPawnPossition.CurrentState != FieldState.BluePawn || newPawnPossition.CurrentState != FieldState.GreenPawn))
+                if (Math.Abs(x) != 1) return false;
             if (Math.Abs(x) != Math.Abs(y)) return false;
             if (newPawnPossition.CurrentState == FieldState.RedPawn && newPawnPossition.X < oldPawnPossition.X) return false;
             if (newPawnPossition.CurrentState == FieldState.YellowPawn && newPawnPossition.X > oldPawnPossition.X) return false;
 
-            //if (newPawnPossition == null || hiddenPawnPossition == null) return null;
-
-            //var x = newPawnPossition.X - hiddenPawnPossition.X;
-            //var y = newPawnPossition.Y - hiddenPawnPossition.Y;
-
-            //if (x != y)
-            //    message = String.Format("Wykonano niedozwlony ruch! ({0})", newPawnPossition);
             return true; 
-        }
-
-        //private Pawn GetHiddenPawnPossition()
-        //{
-        //    for (var i = 0; i < 8; i++)
-        //        for (var j = 0; j < 8; j++)
-        //            if (_boardArray[i, j] == FieldState.Empty && _previousBoardArray[i, j] != FieldState.Empty)
-        //                return new Pawn(i, j);
-        //    return null;
-        //}
-
-        //private Pawn GetNewPawnPossition()
-        //{
-        //    for (var i = 0; i < 8; i++)
-        //        for (var j = 0; j < 8; j++)
-        //            if (_boardArray[i, j] != FieldState.Empty && _previousBoardArray[i, j] == FieldState.Empty)
-        //                return new Pawn(i, j);
-        //    return null;
-        //}
-
-        private string ValidateCountDiff(List<Pawn> diff)
-        {
-            string message = null;
-            if (diff.Count > 2)
-            {
-                message = String.Format("Poruszyl sie wiecej niz jeden pionek! ruchow({0})\n", diff.Count);
-                foreach (var coordinate in diff)
-                    message += String.Format(" ({0}) ", coordinate);
-            }
-            if (diff.Count < 1)
-                message = String.Format("Wykonano niedozwolony ruch!({0})\n", diff.First());
-            return message;
-        }
-
-        public LogicService()
-        {
-            _boardArray = new FieldState[8,8];
-            _previousBoardArray = new FieldState[8, 8];
         }
 
         public List<Pawn> GetDiff()
@@ -136,17 +95,6 @@ namespace MVVM_WPF_Checkers.Services
                         result.Add(new Pawn(i, j, _boardArray[i, j], _previousBoardArray[i, j]));
 
             return result;
-        }
-
-        public bool ShowMovedPawn()
-        {
-
-            return false;
-        }
-
-        public string TestMessage()
-        {
-            return _boardArray[0, 0] + " " + _previousBoardArray[0, 0];
         }
 
         public class Pawn
@@ -166,7 +114,7 @@ namespace MVVM_WPF_Checkers.Services
 
             public override string ToString()
             {
-                return String.Format("[{0}][{1}]", X, Y);
+                return String.Format("[{0}][{1}]", X + 1, Y + 1);
             }
         }
     }
