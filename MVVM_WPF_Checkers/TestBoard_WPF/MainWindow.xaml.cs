@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using MVVM_WPF_Checkers.Models;
+using MVVM_WPF_Checkers.Services;
 
 namespace TestBoard_WPF
 {
@@ -24,11 +25,16 @@ namespace TestBoard_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private LogicService _testLogic;
+        private string _messageLog;
+        private int _messageLogCounter;
+
         public MainWindow()
         {
             InitializeComponent();
             _images = new ObservableCollection<Image>();
             v_ListBox_Board.DataContext = Images;
+            _testLogic = new LogicService();
         }
 
         public ObservableCollection<Image> Images
@@ -104,6 +110,7 @@ namespace TestBoard_WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             FieldState[,] result = new FieldState[8, 8];
             string message = string.Empty;
             for (int i = 0; i < 8; i++)
@@ -131,24 +138,18 @@ namespace TestBoard_WPF
                             result[i, j] = FieldState.Empty;
                             break;
                     }
-
-                    message += result[i, j].ToString()[0] + "\t";
                 }
-
-                message += "\n";
             }
+            _testLogic.BoardArray = result;
+            TestLog(_testLogic.TestMessage());
 
-            //Tutaj Wywolanie logiki z LogicModel;
-            MessageBox.Show(message);
         }
-    }
 
-    public enum FieldState
-    {
-        Empty,
-        RedPawn,
-        YellowPawn,
-        BluePawn,
-        GreenPawn
+        private void TestLog(string text)
+        {
+            var oldLog = _messageLog;
+            _messageLog = String.Format("[{0}] {1} \n{2}", _messageLogCounter++, text, oldLog);
+            v_TextBlock_Test.Text = _messageLog;
+        }
     }
 }
