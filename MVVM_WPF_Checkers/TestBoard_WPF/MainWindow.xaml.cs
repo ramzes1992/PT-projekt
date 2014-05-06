@@ -69,26 +69,26 @@ namespace TestBoard_WPF
             switch (boardArray[tag.Item1, tag.Item2] % 5)
             {
                 case 0:
-                    Images[index].Visibility = System.Windows.Visibility.Hidden;
+                    Images[index].Visibility = Visibility.Hidden;
                     break;
                 case 1:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = RedPawn;
                     break;
                 case 2:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = YellowPawn;
                     break;
                 case 3:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = BluePawn;
                     break;
                 case 4:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = GreenPawn;
                     break;
                 default:
-                    Images[index].Visibility = System.Windows.Visibility.Hidden;
+                    Images[index].Visibility = Visibility.Hidden;
                     break;
             }
 
@@ -108,8 +108,20 @@ namespace TestBoard_WPF
             }  
         }
 
+        private void Clear()
+        {
+            for (var i = 0; i < 8; i ++)
+                for (var j = 0; j < 8; j ++)
+                {
+                    int index = i * 8 + j;
+                    boardArray[i, j] = 0;
+                    Images[index].Visibility = Visibility.Hidden;
+                }
+        }
+
         private void Button_Init_Click(object sender, RoutedEventArgs e)
         {
+            Clear();
             DrawPawnsLine(0, 0, 1, RedPawn);
             DrawPawnsLine(1, 1, 1, RedPawn);
             DrawPawnsLine(6, 0, 2, YellowPawn);
@@ -147,10 +159,8 @@ namespace TestBoard_WPF
                     }
                 }
             }
-            TestLog("dif ---------");
             _testLogic.BoardArray = result;
-            foreach (var diff in _testLogic.GetDiff())
-                TestLog("diff: " +  diff.ToString());
+            TestLog(_testLogic.Validete());
         }
 
         private void TestLog(string text)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using MVVM_WPF_Checkers.Models;
 
 namespace MVVM_WPF_Checkers.Services
@@ -16,6 +17,47 @@ namespace MVVM_WPF_Checkers.Services
                 _previousBoardArray = _boardArray;
                 _boardArray = value;
             }
+        }
+
+        public string Validete()
+        {
+            var diff = GetDiff();
+            var message = ValidateCountDiff(diff);
+            if (message != null) return message;
+
+            var hiddenPawnPossition = GetHiddenPawnPossition();
+            var newPawnPossition = GetNewPawnPossition();
+            return message;
+        }
+
+        private Coordinate GetHiddenPawnPossition()
+        {
+            for (var i = 0; i < 8; i++)
+                for (var j = 0; j < 8; j++)
+                    if (_boardArray[i, j] == FieldState.Empty && _previousBoardArray[i, j] != FieldState.Empty)
+                        return new Coordinate(i, j);
+            return null;
+        }
+
+        private Coordinate GetNewPawnPossition()
+        {
+            for (var i = 0; i < 8; i++)
+                for (var j = 0; j < 8; j++)
+                    if (_boardArray[i, j] != FieldState.Empty && _previousBoardArray[i, j] == FieldState.Empty)
+                        return new Coordinate(i, j);
+            return null;
+        }
+
+        private string ValidateCountDiff(List<Coordinate> diff)
+        {
+            string message = null;
+            if (diff.Count > 1)
+            {
+                message = String.Format("Poruszyl sie wiecej niz jeden pionek! ruchow({0})\n", diff.Count);
+                foreach (var coordinate in diff)
+                    message += String.Format(" ({0}) ", coordinate);
+            }
+            return message;
         }
 
         public LogicService()
