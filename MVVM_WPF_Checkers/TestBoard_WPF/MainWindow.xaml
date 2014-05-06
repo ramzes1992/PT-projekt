@@ -7,15 +7,19 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Content="Test" Click="Button_Click"/>
+        <Button Content="move" Click="Button_Move_Click" Margin="0,0,0,10"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="135*"/>
+                <ColumnDefinition Width="202*"/>
+                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="36*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="386*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Name="v_TextBlock_Test" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="444" Width="360" Margin="27,22,10,75" Padding="10"/>
-            <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
-            <ListBox Name="v_ListBox_Board" ItemsSource="{Binding}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionChanged="v_ListBox_Board_SelectionChanged" SelectionMode="Single">
+            <TextBlock Name="v_TextBlock_Test" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="444" Width="360" Margin="27,22,10,75" Padding="10" Grid.ColumnSpan="4"/>
+            <Image Grid.Column="4" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350" Grid.ColumnSpan="2"/>
+            <ListBox Name="v_ListBox_Board" ItemsSource="{Binding}" Grid.Column="5" Padding="-1" Margin="1,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionChanged="v_ListBox_Board_SelectionChanged" SelectionMode="Single">
                 <!--<ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Focusable" Value="False"/>
@@ -35,6 +39,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
+            <Button Content="Init" Click="Button_Init_Click" Grid.ColumnSpan="6" Margin="0,-10,0,519"/>
             <!--<WrapPanel Grid.Column="1" Orientation="Horizontal" ItemHeight="43" ItemWidth="43" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346">
                 <WrapPanel.Resources>
                     <Style TargetType="Image">

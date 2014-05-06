@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using MVVM_WPF_Checkers.Models;
 using MVVM_WPF_Checkers.Services;
@@ -108,11 +97,29 @@ namespace TestBoard_WPF
             v_ListBox_Board.SelectionChanged += v_ListBox_Board_SelectionChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DrawPawnsLine(int start, int offset, int pawnType, BitmapImage panImage)
+        {
+            for (var i = offset; i < 8; i += 2)
+            {
+                int index = start * 8 + i;
+                boardArray[start, i] = pawnType;
+                Images[index].Visibility = Visibility.Visible;
+                Images[index].Source = panImage;
+            }  
+        }
+
+        private void Button_Init_Click(object sender, RoutedEventArgs e)
+        {
+            DrawPawnsLine(0, 0, 1, RedPawn);
+            DrawPawnsLine(1, 1, 1, RedPawn);
+            DrawPawnsLine(6, 0, 2, YellowPawn);
+            DrawPawnsLine(7, 1, 2, YellowPawn);
+        }
+
+        private void Button_Move_Click(object sender, RoutedEventArgs e)
         {
 
-            FieldState[,] result = new FieldState[8, 8];
-            string message = string.Empty;
+            var result = new FieldState[8, 8];
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -140,9 +147,10 @@ namespace TestBoard_WPF
                     }
                 }
             }
+            TestLog("dif ---------");
             _testLogic.BoardArray = result;
-            TestLog(_testLogic.TestMessage());
-
+            foreach (var diff in _testLogic.GetDiff())
+                TestLog("diff: " +  diff.ToString());
         }
 
         private void TestLog(string text)
