@@ -97,14 +97,14 @@ namespace TestBoard_WPF
             v_ListBox_Board.SelectionChanged += v_ListBox_Board_SelectionChanged;
         }
 
-        private void DrawPawnsLine(int start, int offset, int pawnType, BitmapImage panImage)
+        private void DrawPawnsLine(int start, int offset, int pawnType, BitmapImage pwanImage)
         {
             for (var i = offset; i < 8; i += 2)
             {
                 int index = start * 8 + i;
                 boardArray[start, i] = pawnType;
                 Images[index].Visibility = Visibility.Visible;
-                Images[index].Source = panImage;
+                Images[index].Source = pwanImage;
             }  
         }
 
@@ -126,11 +126,12 @@ namespace TestBoard_WPF
             DrawPawnsLine(1, 1, 1, RedPawn);
             DrawPawnsLine(6, 0, 2, YellowPawn);
             DrawPawnsLine(7, 1, 2, YellowPawn);
+            _testLogic.UpdateBoard(boardArrayToFieldState());
+            TestLog(_testLogic.InitialValid());
         }
 
-        private void Button_Move_Click(object sender, RoutedEventArgs e)
+        private FieldState[,] boardArrayToFieldState()
         {
-
             var result = new FieldState[8, 8];
             for (int i = 0; i < 8; i++)
             {
@@ -159,7 +160,12 @@ namespace TestBoard_WPF
                     }
                 }
             }
-            _testLogic.BoardArray = result;
+            return result;
+        }
+
+        private void Button_Move_Click(object sender, RoutedEventArgs e)
+        {
+            _testLogic.UpdateBoard(boardArrayToFieldState());
             TestLog(_testLogic.Validete());
         }
 
