@@ -99,6 +99,7 @@
     <Compile Include="Helpers\NotificationObject.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\FieldsState.cs" />
+    <Compile Include="Services\LogicService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\WebCamService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

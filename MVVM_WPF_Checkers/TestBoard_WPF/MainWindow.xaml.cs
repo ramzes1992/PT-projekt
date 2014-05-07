@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using MVVM_WPF_Checkers.Models;
+using MVVM_WPF_Checkers.Services;
 
 namespace TestBoard_WPF
 {
@@ -24,11 +14,16 @@ namespace TestBoard_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private LogicService _testLogic;
+        private string _messageLog;
+        private int _messageLogCounter;
+
         public MainWindow()
         {
             InitializeComponent();
             _images = new ObservableCollection<Image>();
             v_ListBox_Board.DataContext = Images;
+            _testLogic = new LogicService();
         }
 
         public ObservableCollection<Image> Images
@@ -74,26 +69,26 @@ namespace TestBoard_WPF
             switch (boardArray[tag.Item1, tag.Item2] % 5)
             {
                 case 0:
-                    Images[index].Visibility = System.Windows.Visibility.Hidden;
+                    Images[index].Visibility = Visibility.Hidden;
                     break;
                 case 1:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = RedPawn;
                     break;
                 case 2:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = YellowPawn;
                     break;
                 case 3:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = BluePawn;
                     break;
                 case 4:
-                    Images[index].Visibility = System.Windows.Visibility.Visible;
+                    Images[index].Visibility = Visibility.Visible;
                     Images[index].Source = GreenPawn;
                     break;
                 default:
-                    Images[index].Visibility = System.Windows.Visibility.Hidden;
+                    Images[index].Visibility = Visibility.Hidden;
                     break;
             }
 
@@ -102,10 +97,48 @@ namespace TestBoard_WPF
             v_ListBox_Board.SelectionChanged += v_ListBox_Board_SelectionChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DrawPawnsLine(int start, int offset, int pawnType, BitmapImage pwanImage)
         {
-            FieldState[,] result = new FieldState[8, 8];
-            string message = string.Empty;
+            for (var i = offset; i < 8; i += 2)
+            {
+                int index = start * 8 + i;
+                boardArray[start, i] = pawnType;
+                Images[index].Visibility = Visibility.Visible;
+                Images[index].Source = pwanImage;
+            }  
+        }
+
+        private void Clear()
+        {
+            for (var i = 0; i < 8; i ++)
+                for (var j = 0; j < 8; j ++)
+                {
+                    int index = i * 8 + j;
+                    boardArray[i, j] = 0;
+                    Images[index].Visibility = Visibility.Hidden;
+                }
+        }
+
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
+            _testLogic.UpdateBoard(boardArrayToFieldState());
+        }
+
+        private void Button_Init_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
+            DrawPawnsLine(0, 0, 1, RedPawn);
+            DrawPawnsLine(1, 1, 1, RedPawn);
+            DrawPawnsLine(6, 0, 2, YellowPawn);
+            DrawPawnsLine(7, 1, 2, YellowPawn);
+            _testLogic.UpdateBoard(boardArrayToFieldState());
+            TestLog(_testLogic.InitialValid());
+        }
+
+        private FieldState[,] boardArrayToFieldState()
+        {
+            var result = new FieldState[8, 8];
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -131,24 +164,22 @@ namespace TestBoard_WPF
                             result[i, j] = FieldState.Empty;
                             break;
                     }
-
-                    message += result[i, j].ToString()[0] + "\t";
                 }
-
-                message += "\n";
             }
-
-            //Tutaj Wywolanie logiki z LogicModel;
-            MessageBox.Show(message);
+            return result;
         }
-    }
 
-    public enum FieldState
-    {
-        Empty,
-        RedPawn,
-        YellowPawn,
-        BluePawn,
-        GreenPawn
+        private void Button_Move_Click(object sender, RoutedEventArgs e)
+        {
+            _testLogic.UpdateBoard(boardArrayToFieldState());
+            TestLog(_testLogic.Validete());
+        }
+
+        private void TestLog(string text)
+        {
+            var oldLog = _messageLog;
+            _messageLog = String.Format("{0}: {1} \n{2}", ++_messageLogCounter, text, oldLog);
+            v_TextBlock_Test.Text = _messageLog;
+        }
     }
 }
