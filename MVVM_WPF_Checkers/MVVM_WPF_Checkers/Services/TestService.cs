@@ -45,7 +45,7 @@ namespace MVVM_WPF_Checkers.Services
         {
             Random rand = new Random();
 
-            for (int c = 0; c < 1000; c++)
+            while (!(sender as BackgroundWorker).CancellationPending)
             {
                 for (int i = 0; i < 8; i++)
                 {
@@ -55,16 +55,8 @@ namespace MVVM_WPF_Checkers.Services
                     }
                 }
 
+                RaiseBoardChangedEvent();
                 Thread.Sleep(1000);
-                if ((sender as BackgroundWorker).CancellationPending)
-                {
-                    return;
-                }
-                else
-                {
-                    RaiseBoardChangedEvent();
-                }
-
             }
         }
         private void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

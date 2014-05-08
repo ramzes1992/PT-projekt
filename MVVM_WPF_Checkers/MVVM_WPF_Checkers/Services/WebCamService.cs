@@ -27,10 +27,7 @@ namespace MVVM_WPF_Checkers.Services
         {
             get
             {
-                lock (_syncImageObcject)
-                {
-                    return _currentCapture;
-                }
+                return _currentCapture;
             }
 
             set
@@ -60,7 +57,8 @@ namespace MVVM_WPF_Checkers.Services
         {
             get
             {
-                return (_webCamWorker != null) ? _webCamWorker.IsBusy : false;
+                return (_webCamWorker != null) ? _webCamWorker.IsBusy : false
+                    && (_validationWorker != null) ? _validationWorker.IsBusy : false;
             }
         }
 
@@ -796,6 +794,9 @@ namespace MVVM_WPF_Checkers.Services
             {
                 _webCamWorker.CancelAsync();
                 Console.WriteLine("WebCamService was canceled");
+
+                _validationWorker.CancelAsync();
+                Console.WriteLine("ValidationService was canceled");
             }
         }
         #endregion
@@ -809,7 +810,7 @@ namespace MVVM_WPF_Checkers.Services
             }
         }
 
-        private void RaiseLogicImageChangedEvent(Bitmap image)
+        private void RaiseValidatedImageChangedEvent(Bitmap image)
         {
             if (ValidatedImageChanged != null)
             {
@@ -847,7 +848,7 @@ namespace MVVM_WPF_Checkers.Services
                             double g = pixel.Green;
                             double r = pixel.Red;
 
-                            if (r > Red_R_min && r < Red_R_max && g > Red_G_min && g < Red_G_max && b > Red_B_min && b < Red_B_max)
+                            if (r >= Red_R_min && r <= Red_R_max && g >= Red_G_min && g <= Red_G_max && b >= Red_B_min && b <= Red_B_max)
                             {
                                 pixel.Blue = 0;
                                 pixel.Green = 0;
@@ -855,7 +856,7 @@ namespace MVVM_WPF_Checkers.Services
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].red++;
                             }
-                            else if (r > Green_R_min && r < Green_R_max && g > Green_G_min && g < Green_G_max && b > Green_B_min && b < Green_B_max) //if (r > 0 && r < 102 && g > 128 && g < 255 && b > 0 && b < 119)
+                            else if (r >= Green_R_min && r <= Green_R_max && g >= Green_G_min && g <= Green_G_max && b >= Green_B_min && b <= Green_B_max) //if (r >= 0 && r <= 102 && g >= 128 && g <= 255 && b >= 0 && b <= 119)
                             {
                                 pixel.Blue = 0;
                                 pixel.Green = 255;
@@ -863,7 +864,7 @@ namespace MVVM_WPF_Checkers.Services
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].green++;
                             }
-                            else if (r > Yellow_R_min && r < Yellow_R_max && g > Yellow_G_min && g < Yellow_G_max && b > Yellow_B_min && b < Yellow_B_max) // if (r > 194 && r < 255 && g > 165 && g < 240 && b > 32 && b < 140)
+                            else if (r >= Yellow_R_min && r <= Yellow_R_max && g >= Yellow_G_min && g <= Yellow_G_max && b >= Yellow_B_min && b <= Yellow_B_max) // if (r >= 194 && r <= 255 && g >= 165 && g <= 240 && b >= 32 && b <= 140)
                             {
                                 pixel.Blue = 0;
                                 pixel.Green = 191;
@@ -871,7 +872,7 @@ namespace MVVM_WPF_Checkers.Services
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].yellow++;
                             }
-                            else if (r > Blue_R_min && r < Blue_R_max && g > Blue_G_min && g < Blue_G_max && b > Blue_B_min && b < Blue_B_max) // if (r > 0 && r < 65 && g > 0 && g < 105 && b > 70 && b < 255)
+                            else if (r >= Blue_R_min && r <= Blue_R_max && g >= Blue_G_min && g <= Blue_G_max && b >= Blue_B_min && b <= Blue_B_max) // if (r >= 0 && r <= 65 && g >= 0 && g <= 105 && b >= 70 && b <= 255)
                             {
                                 pixel.Blue = 255;
                                 pixel.Green = 0;
@@ -879,7 +880,7 @@ namespace MVVM_WPF_Checkers.Services
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].blue++;
                             }
-                            else if (r > White_R_min && r < White_R_max && g > White_G_min && g < White_G_max && b > White_B_min && b < White_B_max)
+                            else if (r >= White_R_min && r <= White_R_max && g >= White_G_min && g <= White_G_max && b >= White_B_min && b <= White_B_max)
                             {
                                 pixel.Blue = 255;
                                 pixel.Green = 255;
@@ -887,7 +888,7 @@ namespace MVVM_WPF_Checkers.Services
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].white++;
                             }
-                            else if (r > Black_R_min && r < Black_R_max && g > Black_G_min && g < Black_G_max && b > Black_B_min && b < Black_B_max)
+                            else if (r >= Black_R_min && r <= Black_R_max && g >= Black_G_min && g <= Black_G_max && b >= Black_B_min && b <= Black_B_max)
                             {
                                 pixel.Blue = 0;
                                 pixel.Green = 0;
@@ -899,7 +900,7 @@ namespace MVVM_WPF_Checkers.Services
                             {
                                 pixel.Blue = 194;
                                 pixel.Green = 255;
-                                pixel.Red = 0; //czarny
+                                pixel.Red = 0; //szpitalny
                                 boardPlaceImage[jmin, imin] = pixel;
                                 fieldCounterTable[boardHeight, boardWidth].undefined++;
                             }
@@ -939,8 +940,14 @@ namespace MVVM_WPF_Checkers.Services
         {
             while (!_webCamWorker.CancellationPending)
             {
+
                 CurrentCapture = capture.QueryFrame().Copy();
-                RaiseImageChangedEvent(CurrentCapture.ToBitmap());
+                RaiseImageChangedEvent(CurrentCapture.Bitmap);
+
+                //v.II
+                //Image<Bgr, Byte> tmp = capture.QueryFrame().Copy();
+                //CurrentCapture = tmp;
+                //RaiseImageChangedEvent(tmp.Bitmap);
             }
         }
         void _webCamWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -949,7 +956,7 @@ namespace MVVM_WPF_Checkers.Services
         }
         void _validationWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (!_webCamWorker.CancellationPending)
+            while (!_validationWorker.CancellationPending)
             {
                 #region konwersja + kolory
 
@@ -1021,7 +1028,7 @@ namespace MVVM_WPF_Checkers.Services
                 #endregion
 
 
-                RaiseLogicImageChangedEvent(ImageFrameClone.ToBitmap());
+                RaiseValidatedImageChangedEvent(ImageFrameClone.Bitmap);
                 #endregion
             }
         }

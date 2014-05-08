@@ -104,21 +104,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Red_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Red_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Red_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Red_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
@@ -128,21 +128,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Green_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Green_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Green_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Green_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
@@ -152,21 +152,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Blue_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Blue_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Blue_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
@@ -176,21 +176,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Yellow_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Yellow_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Yellow_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
@@ -200,21 +200,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding White_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding White_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding White_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_White_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
@@ -224,21 +224,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="R" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_R" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Black_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_R, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="G" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_G" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Black_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_G, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="B" Margin="5,0"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_B" Height="15" Width="300" Minimum="0" Maximum="250" Margin="0,3,0,3" LowerValue="{Binding Black_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
+                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
                                 <TextBox Text="{Binding ElementName=v_RangeSlider_Black_B, Path=UpperValue, StringFormat={}{0:#}}"/>
                             </StackPanel>
                         </StackPanel>
