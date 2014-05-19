@@ -10,7 +10,7 @@ namespace MVVM_WPF_Checkers.Services
     {
         private FieldState[,] _boardArray;
         private FieldState[,] _previousBoardArray;
-        private List<FieldState[,]> _possibleMoves;
+        private readonly List<FieldState[,]> _possibleMoves;
         private FieldState[,] _possibleCaptures;
 
         public FieldState[,] BoardArray
@@ -71,7 +71,17 @@ namespace MVVM_WPF_Checkers.Services
 
             SetPossibleMoves();
 
-            return null;
+            return CheckNewMove() ? null : "Invalid move";
+        }
+
+        private bool CheckNewMove()
+        {
+            foreach (var move in _possibleMoves)
+            {
+                var diff = GetDiff(_boardArray, move);
+                if (diff.Count == 0) return true;
+            }
+            return false;
         }
 
         private void SetPossibleMoves()
@@ -108,7 +118,7 @@ namespace MVVM_WPF_Checkers.Services
 
         private void MovePawn(int currentX, int currentY, int newX, int newY)
         {
-            if (newX < 0 || newX > 8 || newY < 0 || newY > 8) return;
+            if (newX < 0 || newX > 7 || newY < 0 || newY > 7) return;
             if (_previousBoardArray[newX, newY] != FieldState.Empty) return;
             var tmpBoard = (FieldState[,])_previousBoardArray.Clone();
             tmpBoard[newX, newY] = tmpBoard[currentX, currentY];
@@ -135,14 +145,16 @@ namespace MVVM_WPF_Checkers.Services
             return true; 
         }
 
-        public List<Pawn> GetDiff()
+        public List<Pawn> GetDiff(FieldState[,] baseArray = null, FieldState[,] compareArray = null)
         {
+            if (baseArray == null) baseArray = _boardArray;
+            if (compareArray == null) compareArray = _previousBoardArray;
             var result = new List<Pawn>();
+
             for(var i=0; i<8; i++)
                 for (var j = 0; j < 8; j++)
-                    if (_previousBoardArray[i, j].ToString() != _boardArray[i, j].ToString())
-                        result.Add(new Pawn(i, j, _boardArray[i, j], _previousBoardArray[i, j]));
-
+                    if (baseArray[i, j] != compareArray[i, j])
+                        result.Add(new Pawn(i, j, baseArray[i, j], compareArray[i, j]));
             return result;
         }
 
