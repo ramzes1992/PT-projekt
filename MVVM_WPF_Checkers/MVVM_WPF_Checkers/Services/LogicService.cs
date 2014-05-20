@@ -11,7 +11,7 @@ namespace MVVM_WPF_Checkers.Services
         private FieldState[,] _boardArray;
         private FieldState[,] _previousBoardArray;
         private readonly List<FieldState[,]> _possibleMoves;
-        private FieldState[,] _possibleCaptures;
+        private readonly List<Capture> _possibleCapture;
 
         public FieldState[,] BoardArray
         {
@@ -27,7 +27,7 @@ namespace MVVM_WPF_Checkers.Services
             _boardArray = new FieldState[8, 8];
             _previousBoardArray = new FieldState[8, 8];
             _possibleMoves = new List<FieldState[,]>();
-            _possibleCaptures = new FieldState[8, 8];
+            _possibleCapture = new List<Capture>();
         }
 
 
@@ -69,19 +69,14 @@ namespace MVVM_WPF_Checkers.Services
             //if (diff.Count != 2) return message;
             //if (!ValidateMovePawn(diff)) return message;
 
+            SetPossibleCapture();
+            if (_possibleCapture.Any(capture => GetDiff(_boardArray, capture.BoardState).Count == 0))
+                return null;
+            if (_possibleCapture.Any())
+                return "Obligatory capture";
+
             SetPossibleMoves();
-
-            return CheckNewMove() ? null : "Invalid move";
-        }
-
-        private bool CheckNewMove()
-        {
-            foreach (var move in _possibleMoves)
-            {
-                var diff = GetDiff(_boardArray, move);
-                if (diff.Count == 0) return true;
-            }
-            return false;
+            return _possibleMoves.Any(move => GetDiff(_boardArray, move).Count == 0) ? null : "Invalid move";
         }
 
         private void SetPossibleMoves()
@@ -126,6 +121,61 @@ namespace MVVM_WPF_Checkers.Services
             _possibleMoves.Add(tmpBoard);
         }
 
+        private void SetPossibleCapture()
+        {
+            _possibleCapture.Clear();
+
+            for (var i = 0; i < 8; i++)
+                for (var j = 0; j < 8; j++)
+                {
+                    CapturePawns(_previousBoardArray, 0, i, j);
+                    //MoveDames(i, j, fieldState);
+                }
+        }
+
+        private void CapturePawns(FieldState[,] boardState, int counter, int x, int y)
+        {
+            if (boardState[x, y] != FieldState.RedPawn && boardState[x, y] != FieldState.YellowPawn) return;
+            CapturePawn(boardState, counter, x, y, 1, 1);
+            CapturePawn(boardState, counter, x, y, 1, -1);
+            CapturePawn(boardState, counter, x, y, -1, -1);
+            CapturePawn(boardState, counter, x, y, -1, 1);
+        }
+
+        private void CapturePawn(FieldState[,] boardState, int counter, int currentX, int currentY, int moveX, int moveY)
+        {
+            if (boardState[currentX, currentY] != FieldState.RedPawn) return;
+            var opponentPawnX = currentX + moveX;
+            var opponentPawnY = currentY + moveY;
+            if (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) return;
+            var newX = currentX + (2*moveX);
+            var newY = currentY + (2*moveY);
+            if (newX < 0 || newX > 7 || newY < 0 || newY > 7) return;
+            if (boardState[opponentPawnX, opponentPawnY] != FieldState.YellowPawn) return;
+            if (boardState[newX, newY] != FieldState.Empty) return;
+            var tmpBoard = (FieldState[,])boardState.Clone();
+            tmpBoard[newX, newY] = tmpBoard[currentX, currentY];
+            tmpBoard[currentX, currentY] = FieldState.Empty;
+            tmpBoard[opponentPawnX, opponentPawnY] = FieldState.Empty;
+            //sprawdzam jeszcze raz
+            //jak sprawdzanie sie nie powiodło to add
+            CapturePawns(tmpBoard, counter++, newX, newY);
+            _possibleCapture.Add(new Capture(1, tmpBoard));
+        }
+
+        public List<Pawn> GetDiff(FieldState[,] baseArray = null, FieldState[,] compareArray = null)
+        {
+            if (baseArray == null) baseArray = _boardArray;
+            if (compareArray == null) compareArray = _previousBoardArray;
+            var result = new List<Pawn>();
+
+            for(var i=0; i<8; i++)
+                for (var j = 0; j < 8; j++)
+                    if (baseArray[i, j] != compareArray[i, j])
+                        result.Add(new Pawn(i, j, baseArray[i, j], compareArray[i, j]));
+            return result;
+        }
+
         private bool ValidateMovePawn(List<Pawn> diff)
         {
             var oldPawnPossition = diff.FirstOrDefault(pawn => pawn.CurrentState == FieldState.Empty);
@@ -142,20 +192,7 @@ namespace MVVM_WPF_Checkers.Services
             if (newPawnPossition.CurrentState == FieldState.RedPawn && newPawnPossition.X < oldPawnPossition.X) return false;
             if (newPawnPossition.CurrentState == FieldState.YellowPawn && newPawnPossition.X > oldPawnPossition.X) return false;
 
-            return true; 
-        }
-
-        public List<Pawn> GetDiff(FieldState[,] baseArray = null, FieldState[,] compareArray = null)
-        {
-            if (baseArray == null) baseArray = _boardArray;
-            if (compareArray == null) compareArray = _previousBoardArray;
-            var result = new List<Pawn>();
-
-            for(var i=0; i<8; i++)
-                for (var j = 0; j < 8; j++)
-                    if (baseArray[i, j] != compareArray[i, j])
-                        result.Add(new Pawn(i, j, baseArray[i, j], compareArray[i, j]));
-            return result;
+            return true;
         }
 
         public class Pawn
@@ -176,6 +213,18 @@ namespace MVVM_WPF_Checkers.Services
             public override string ToString()
             {
                 return String.Format("[{0}][{1}]", X + 1, Y + 1);
+            }
+        }
+
+        public class Capture
+        {
+            public int CaptureLength { get; set; }
+            public FieldState[,] BoardState { get; set; }
+
+            public Capture(int captureLength, FieldState[,] boardState)
+            {
+                CaptureLength = captureLength;
+                BoardState = boardState;
             }
         }
     }
