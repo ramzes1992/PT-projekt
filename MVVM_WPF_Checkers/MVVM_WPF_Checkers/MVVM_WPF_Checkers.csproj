@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,7 +101,7 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Models\FieldsState.cs" />
     <Compile Include="Services\LogicService.cs" />
-    <Compile Include="Services\TestService.cs" />
+    <Compile Include="Services\CalibrationService.cs" />
     <Compile Include="Services\WebCamService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

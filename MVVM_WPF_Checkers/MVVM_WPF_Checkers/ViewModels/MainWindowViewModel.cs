@@ -37,7 +37,14 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             get
             {
-                return _imageFrame;
+                if (_imageFrame != null)
+                {
+                    return _imageFrame;
+                }
+                else
+                {
+                    return new Bitmap(640, 480);
+                }
             }
 
             set
@@ -46,10 +53,15 @@ namespace MVVM_WPF_Checkers.ViewModels
                 {
                     _imageFrame = value;
                     RaisePropertyChanged(() => ImageFrame);
+                    RaisePropertyChanged(() => RedRectangleFrame);
+                    RaisePropertyChanged(() => GreenRectangleFrame);
+                    RaisePropertyChanged(() => BlueRectangleFrame);
+                    RaisePropertyChanged(() => YellowRectangleFrame);
+                    RaisePropertyChanged(() => WhiteRectangleFrame);
+                    RaisePropertyChanged(() => BlackRectangleFrame);
                 }
             }
         }
-
 
         private Bitmap _tmpImageFrame;
         public Bitmap TmpImageFrame
@@ -60,691 +72,370 @@ namespace MVVM_WPF_Checkers.ViewModels
             }
             set
             {
-                if(_tmpImageFrame != value)
+                if (_tmpImageFrame != value)
                 {
                     _tmpImageFrame = value;
                     RaisePropertyChanged(() => TmpImageFrame);
                 }
             }
         }
-        #endregion
 
-        #region Shit
-
-        #region Red
-        //R
-        private int _red_R_min;
-        public int Red_R_min
+        public int Deviation
         {
             get
             {
-                return _red_R_min;
+                return _deviation;
             }
             set
             {
-                if (_red_R_min != value)
+                if (value != _deviation)
                 {
-                    _red_R_min = value;
-                    _webCamService.Red_R_min = _red_R_min;
-                    RaisePropertyChanged(() => Red_R_min);
+                    _deviation = value;
+                    RaisePropertyChanged(() => Deviation);
+                }
+            }
+        }
+        private int _deviation;
+
+        #region Colours Properties
+        private double _redR;
+        private double _redG;
+        private double _redB;
+        private double _greenR;
+        private double _greenG;
+        private double _greenB;
+        private double _blueR;
+        private double _blueG;
+        private double _blueB;
+        private double _yellowR;
+        private double _yellowG;
+        private double _yellowB;
+        private double _whiteR;
+        private double _whiteG;
+        private double _whiteB;
+        private double _blackR;
+        private double _blackG;
+        private double _blackB;
+
+        public double RedR
+        {
+            get
+            {
+                return _redR;
+            }
+            set
+            {
+                if (value != _redR)
+                {
+                    _redR = value;
+                    RaisePropertyChanged(() => RedR);
+                }
+            }
+        }
+        public double RedG
+        {
+            get
+            {
+                return _redG;
+            }
+            set
+            {
+                if (value != _redG)
+                {
+                    _redG = value;
+                    RaisePropertyChanged(() => RedG);
+                }
+            }
+        }
+        public double RedB
+        {
+            get
+            {
+                return _redB;
+            }
+            set
+            {
+                if (value != _redB)
+                {
+                    _redB = value;
+                    RaisePropertyChanged(() => RedB);
                 }
             }
         }
 
-        private int _red_R_max;
-        public int Red_R_max
+        public double GreenR
         {
             get
             {
-                return _red_R_max;
+                return _greenR;
             }
             set
             {
-                if (_red_R_max != value)
+                if (value != _greenR)
                 {
-                    _red_R_max = value;
-                    _webCamService.Red_R_max = _red_R_max;
-                    RaisePropertyChanged(() => Red_R_max);
+                    _greenR = value;
+                    RaisePropertyChanged(() => GreenR);
+                }
+            }
+        }
+        public double GreenG
+        {
+            get
+            {
+                return _greenG;
+            }
+            set
+            {
+                if (value != _greenG)
+                {
+                    _greenG = value;
+                    RaisePropertyChanged(() => GreenG);
+                }
+            }
+        }
+        public double GreenB
+        {
+            get
+            {
+                return _greenB;
+            }
+            set
+            {
+                if (value != _greenB)
+                {
+                    _greenB = value;
+                    RaisePropertyChanged(() => GreenB);
                 }
             }
         }
 
-        //G
-        private int _red_G_min;
-        public int Red_G_min
+        public double BlueR
         {
             get
             {
-                return _red_G_min;
+                return _blueR;
             }
             set
             {
-                if (_red_G_min != value)
+                if (value != _blueR)
                 {
-                    _red_G_min = value;
-                    _webCamService.Red_G_min = _red_G_min;
-                    RaisePropertyChanged(() => Red_G_min);
+                    _blueR = value;
+                    RaisePropertyChanged(() => BlueR);
+                }
+            }
+        }
+        public double BlueG
+        {
+            get
+            {
+                return _blueG;
+            }
+            set
+            {
+                if (value != _blueG)
+                {
+                    _blueG = value;
+                    RaisePropertyChanged(() => BlueG);
+                }
+            }
+        }
+        public double BlueB
+        {
+            get
+            {
+                return _blueB;
+            }
+            set
+            {
+                if (value != _blueB)
+                {
+                    _blueB = value;
+                    RaisePropertyChanged(() => BlueB);
                 }
             }
         }
 
-        private int _red_G_max;
-        public int Red_G_max
+        public double YellowR
         {
             get
             {
-                return _red_G_max;
+                return _yellowR;
             }
             set
             {
-                if (_red_G_max != value)
+                if (value != _yellowR)
                 {
-                    _red_G_max = value;
-                    _webCamService.Red_G_max = _red_G_max;
-                    RaisePropertyChanged(() => Red_G_max);
+                    _yellowR = value;
+                    RaisePropertyChanged(() => YellowR);
+                }
+            }
+        }
+        public double YellowG
+        {
+            get
+            {
+                return _yellowG;
+            }
+            set
+            {
+                if (value != _yellowG)
+                {
+                    _yellowG = value;
+                    RaisePropertyChanged(() => YellowG);
+                }
+            }
+        }
+        public double YellowB
+        {
+            get
+            {
+                return _yellowB;
+            }
+            set
+            {
+                if (value != _yellowB)
+                {
+                    _yellowB = value;
+                    RaisePropertyChanged(() => YellowB);
                 }
             }
         }
 
-        //B
-        private int _red_B_min;
-        public int Red_B_min
+        public double WhiteR
         {
             get
             {
-                return _red_B_min;
+                return _whiteR;
             }
             set
             {
-                if (_red_B_min != value)
+                if (value != _whiteR)
                 {
-                    _red_B_min = value;
-                    _webCamService.Red_B_min = _red_B_min;
-                    RaisePropertyChanged(() => Red_B_min);
+                    _whiteR = value;
+                    RaisePropertyChanged(() => WhiteR);
+                }
+            }
+        }
+        public double WhiteG
+        {
+            get
+            {
+                return _whiteG;
+            }
+            set
+            {
+                if (value != _whiteG)
+                {
+                    _whiteG = value;
+                    RaisePropertyChanged(() => WhiteG);
+                }
+            }
+        }
+        public double WhiteB
+        {
+            get
+            {
+                return _whiteB;
+            }
+            set
+            {
+                if (value != _whiteB)
+                {
+                    _whiteB = value;
+                    RaisePropertyChanged(() => WhiteB);
                 }
             }
         }
 
-        private int _red_B_max;
-        public int Red_B_max
+        public double BlackR
         {
             get
             {
-                return _red_B_max;
+                return _blackR;
             }
             set
             {
-                if (_red_B_max != value)
+                if (value != _blackR)
                 {
-                    _red_B_max = value;
-                    _webCamService.Red_B_max = _red_B_max;
-                    RaisePropertyChanged(() => Red_B_max);
+                    _blackR = value;
+                    RaisePropertyChanged(() => BlackR);
                 }
             }
         }
-        #endregion
-
-        #region Green
-        //R
-        private int _green_R_min;
-        public int Green_R_min
+        public double BlackG
         {
             get
             {
-                return _green_R_min;
+                return _blackG;
             }
             set
             {
-                if (_green_R_min != value)
+                if (value != _blackG)
                 {
-                    _green_R_min = value;
-                    _webCamService.Green_R_min = _green_R_min;
-                    RaisePropertyChanged(() => Green_R_min);
+                    _blackG = value;
+                    RaisePropertyChanged(() => BlackG);
                 }
             }
         }
-
-        private int _green_R_max;
-        public int Green_R_max
+        public double BlackB
         {
             get
             {
-                return _green_R_max;
+                return _blackB;
             }
             set
             {
-                if (_green_R_max != value)
+                if (value != _blackB)
                 {
-                    _green_R_max = value;
-                    _webCamService.Green_R_max = _green_R_max;
-                    RaisePropertyChanged(() => Green_R_max);
-                }
-            }
-        }
-
-        //G
-        private int _green_G_min;
-        public int Green_G_min
-        {
-            get
-            {
-                return _green_G_min;
-            }
-            set
-            {
-                if (_green_G_min != value)
-                {
-                    _green_G_min = value;
-                    _webCamService.Green_G_min = _green_G_min;
-                    RaisePropertyChanged(() => Green_G_min);
-                }
-            }
-        }
-
-        private int _green_G_max;
-        public int Green_G_max
-        {
-            get
-            {
-                return _green_G_max;
-            }
-            set
-            {
-                if (_green_G_max != value)
-                {
-                    _green_G_max = value;
-                    _webCamService.Green_G_max = _green_G_max;
-                    RaisePropertyChanged(() => Green_G_max);
-                }
-            }
-        }
-
-        //B
-        private int _green_B_min;
-        public int Green_B_min
-        {
-            get
-            {
-                return _green_B_min;
-            }
-            set
-            {
-                if (_green_B_min != value)
-                {
-                    _green_B_min = value;
-                    _webCamService.Green_B_min = _green_B_min;
-                    RaisePropertyChanged(() => Green_B_min);
-                }
-            }
-        }
-
-        private int _green_B_max;
-        public int Green_B_max
-        {
-            get
-            {
-                return _green_B_max;
-            }
-            set
-            {
-                if (_green_B_max != value)
-                {
-                    _green_B_max = value;
-                    _webCamService.Green_B_max = _green_B_max;
-                    RaisePropertyChanged(() => Green_B_max);
-                }
-            }
-        }
-        #endregion
-
-        #region Blue
-        //R
-        private int _blue_R_min;
-        public int Blue_R_min
-        {
-            get
-            {
-                return _blue_R_min;
-            }
-            set
-            {
-                if (_blue_R_min != value)
-                {
-                    _blue_R_min = value;
-                    _webCamService.Blue_R_min = _blue_R_min;
-                    RaisePropertyChanged(() => Blue_R_min);
-                }
-            }
-        }
-
-        private int _blue_R_max;
-        public int Blue_R_max
-        {
-            get
-            {
-                return _blue_R_max;
-            }
-            set
-            {
-                if (_blue_R_max != value)
-                {
-                    _blue_R_max = value;
-                    _webCamService.Blue_R_max = _blue_R_max;
-                    RaisePropertyChanged(() => Blue_R_max);
-                }
-            }
-        }
-
-        //G
-        private int _blue_G_min;
-        public int Blue_G_min
-        {
-            get
-            {
-                return _blue_G_min;
-            }
-            set
-            {
-                if (_blue_G_min != value)
-                {
-                    _blue_G_min = value;
-                    _webCamService.Blue_G_min = _blue_G_min;
-                    RaisePropertyChanged(() => Blue_G_min);
-                }
-            }
-        }
-
-        private int _blue_G_max;
-        public int Blue_G_max
-        {
-            get
-            {
-                return _blue_G_max;
-            }
-            set
-            {
-                if (_blue_G_max != value)
-                {
-                    _blue_G_max = value;
-                    _webCamService.Blue_G_max = _blue_G_max;
-                    RaisePropertyChanged(() => Blue_G_max);
-                }
-            }
-        }
-
-        //B
-        private int _blue_B_min;
-        public int Blue_B_min
-        {
-            get
-            {
-                return _blue_B_min;
-            }
-            set
-            {
-                if (_blue_B_min != value)
-                {
-                    _blue_B_min = value;
-                    _webCamService.Blue_B_min = _blue_B_min;
-                    RaisePropertyChanged(() => Blue_B_min);
-                }
-            }
-        }
-
-        private int _blue_B_max;
-        public int Blue_B_max
-        {
-            get
-            {
-                return _blue_B_max;
-            }
-            set
-            {
-                if (_blue_B_max != value)
-                {
-                    _blue_B_max = value;
-                    _webCamService.Blue_B_max = _blue_B_max;
-                    RaisePropertyChanged(() => Blue_B_max);
+                    _blackB = value;
+                    RaisePropertyChanged(() => BlackB);
                 }
             }
         }
         #endregion
 
-        #region Yellow
-        //R
-        private int _yellow_R_min;
-        public int Yellow_R_min
+
+        #region Colours Rectangles
+        public Bitmap RedRectangleFrame
         {
             get
             {
-                return _yellow_R_min;
-            }
-            set
-            {
-                if (_yellow_R_min != value)
-                {
-                    _yellow_R_min = value;
-                    _webCamService.Yellow_R_min = _yellow_R_min;
-                    RaisePropertyChanged(() => Yellow_R_min);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 10, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
-
-        private int _yellow_R_max;
-        public int Yellow_R_max
+        public Bitmap GreenRectangleFrame
         {
             get
             {
-                return _yellow_R_max;
-            }
-            set
-            {
-                if (_yellow_R_max != value)
-                {
-                    _yellow_R_max = value;
-                    _webCamService.Yellow_R_max = _yellow_R_max;
-                    RaisePropertyChanged(() => Yellow_R_max);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 90, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
-
-        //G
-        private int _yellow_G_min;
-        public int Yellow_G_min
+        public Bitmap BlueRectangleFrame
         {
             get
             {
-                return _yellow_G_min;
-            }
-            set
-            {
-                if (_yellow_G_min != value)
-                {
-                    _yellow_G_min = value;
-                    _webCamService.Yellow_G_min = _yellow_G_min;
-                    RaisePropertyChanged(() => Yellow_G_min);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 170, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
-
-        private int _yellow_G_max;
-        public int Yellow_G_max
+        public Bitmap YellowRectangleFrame
         {
             get
             {
-                return _yellow_G_max;
-            }
-            set
-            {
-                if (_yellow_G_max != value)
-                {
-                    _yellow_G_max = value;
-                    _webCamService.Yellow_G_max = _yellow_G_max;
-                    RaisePropertyChanged(() => Yellow_G_max);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 250, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
-
-        //B
-        private int _yellow_B_min;
-        public int Yellow_B_min
+        public Bitmap WhiteRectangleFrame
         {
             get
             {
-                return _yellow_B_min;
-            }
-            set
-            {
-                if (_yellow_B_min != value)
-                {
-                    _yellow_B_min = value;
-                    _webCamService.Yellow_B_min = _yellow_B_min;
-                    RaisePropertyChanged(() => Yellow_B_min);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 330, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
-
-        private int _yellow_B_max;
-        public int Yellow_B_max
+        public Bitmap BlackRectangleFrame
         {
             get
             {
-                return _yellow_B_max;
-            }
-            set
-            {
-                if (_yellow_B_max != value)
-                {
-                    _yellow_B_max = value;
-                    _webCamService.Yellow_B_max = _yellow_B_max;
-                    RaisePropertyChanged(() => Yellow_B_max);
-                }
-            }
-        }
-        #endregion
-
-        #region White
-        //R
-        private int _white_R_min;
-        public int White_R_min
-        {
-            get
-            {
-                return _white_R_min;
-            }
-            set
-            {
-                if (_white_R_min != value)
-                {
-                    _white_R_min = value;
-                    _webCamService.White_R_min = _white_R_min;
-                    RaisePropertyChanged(() => White_R_min);
-                }
-            }
-        }
-
-        private int _white_R_max;
-        public int White_R_max
-        {
-            get
-            {
-                return _white_R_max;
-            }
-            set
-            {
-                if (_white_R_max != value)
-                {
-                    _white_R_max = value;
-                    _webCamService.White_R_max = _white_R_max;
-                    RaisePropertyChanged(() => White_R_max);
-                }
-            }
-        }
-
-        //G
-        private int _white_G_min;
-        public int White_G_min
-        {
-            get
-            {
-                return _white_G_min;
-            }
-            set
-            {
-                if (_white_G_min != value)
-                {
-                    _white_G_min = value;
-                    _webCamService.White_G_min = _white_G_min;
-                    RaisePropertyChanged(() => White_G_min);
-                }
-            }
-        }
-
-        private int _white_G_max;
-        public int White_G_max
-        {
-            get
-            {
-                return _white_G_max;
-            }
-            set
-            {
-                if (_white_G_max != value)
-                {
-                    _white_G_max = value;
-                    _webCamService.White_G_max = _white_G_max;
-                    RaisePropertyChanged(() => White_G_max);
-                }
-            }
-        }
-
-        //B
-        private int _white_B_min;
-        public int White_B_min
-        {
-            get
-            {
-                return _white_B_min;
-            }
-            set
-            {
-                if (_white_B_min != value)
-                {
-                    _white_B_min = value;
-                    _webCamService.White_B_min = _white_B_min;
-                    RaisePropertyChanged(() => White_B_min);
-                }
-            }
-        }
-
-        private int _white_B_max;
-        public int White_B_max
-        {
-            get
-            {
-                return _white_B_max;
-            }
-            set
-            {
-                if (_white_B_max != value)
-                {
-                    _white_B_max = value;
-                    _webCamService.White_B_max = _white_B_max;
-                    RaisePropertyChanged(() => White_B_max);
-                }
-            }
-        }
-        #endregion
-
-        #region Black
-        //R
-        private int _black_R_min;
-        public int Black_R_min
-        {
-            get
-            {
-                return _black_R_min;
-            }
-            set
-            {
-                if (_black_R_min != value)
-                {
-                    _black_R_min = value;
-                    _webCamService.Black_R_min = _black_R_min;
-                    RaisePropertyChanged(() => Black_R_min);
-                }
-            }
-        }
-
-        private int _black_R_max;
-        public int Black_R_max
-        {
-            get
-            {
-                return _black_R_max;
-            }
-            set
-            {
-                if (_black_R_max != value)
-                {
-                    _black_R_max = value;
-                    _webCamService.Black_R_max = _black_R_max;
-                    RaisePropertyChanged(() => Black_R_max);
-                }
-            }
-        }
-
-        //G
-        private int _black_G_min;
-        public int Black_G_min
-        {
-            get
-            {
-                return _black_G_min;
-            }
-            set
-            {
-                if (_black_G_min != value)
-                {
-                    _black_G_min = value;
-                    _webCamService.Black_G_min = _black_G_min;
-                    RaisePropertyChanged(() => Black_G_min);
-                }
-            }
-        }
-
-        private int _black_G_max;
-        public int Black_G_max
-        {
-            get
-            {
-                return _black_G_max;
-            }
-            set
-            {
-                if (_black_G_max != value)
-                {
-                    _black_G_max = value;
-                    _webCamService.Black_G_max = _black_G_max;
-                    RaisePropertyChanged(() => Black_G_max);
-                }
-            }
-        }
-
-        //B
-        private int _black_B_min;
-        public int Black_B_min
-        {
-            get
-            {
-                return _black_B_min;
-            }
-            set
-            {
-                if (_black_B_min != value)
-                {
-                    _black_B_min = value;
-                    _webCamService.Black_G_min = _black_B_min;
-                    RaisePropertyChanged(() => Black_B_min);
-                }
-            }
-        }
-
-        private int _black_B_max;
-        public int Black_B_max
-        {
-            get
-            {
-                return _black_B_max;
-            }
-            set
-            {
-                if (_black_B_max != value)
-                {
-                    _black_B_max = value;
-                    _webCamService.Black_B_max = _black_B_max;
-                    RaisePropertyChanged(() => Black_B_max);
-                }
+                return ImageFrame.Clone(new Rectangle(490, 410, 140, 60), System.Drawing.Imaging.PixelFormat.DontCare);
             }
         }
         #endregion
@@ -753,9 +444,10 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         #region Commands
 
-        public ICommand RunWebCamCommand { get { return new DelegateCommand(OnRunWebCam); } }
+        public ICommand RunWebCamCommand { get { return new DelegateCommand(OnRunWebCam, CanExecuteRunWebCam); } }
         public ICommand StopWebCamCommand { get { return new DelegateCommand(OnStopWebCam, CanExecuteStopWebCam); } }
-
+        public ICommand RunCalibrationCommand { get { return new DelegateCommand(OnRunCalibration, CanExecuteStartCalibration); } }
+        public ICommand StopCalibrationCommand { get { return new DelegateCommand(OnStopCalibration, CanExecuteStopCalibration); } }
         #endregion
 
         #region Command Handlers
@@ -764,8 +456,13 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             if (_webCamService != null)
             {
-                _webCamService.RunWServiceAsync();
+                _webCamService.RunServiceAsync();
             }
+        }
+
+        private bool CanExecuteRunWebCam()
+        {
+            return (_webCamService != null) ? !_webCamService.IsRunning : false;
         }
 
         private void OnStopWebCam()
@@ -781,6 +478,31 @@ namespace MVVM_WPF_Checkers.ViewModels
             return (_webCamService != null) ? _webCamService.IsRunning : false;
         }
 
+        private void OnRunCalibration()
+        {
+            if (_calibrationService != null)
+            {
+                _calibrationService.RunServiceAsync();
+            }
+        }
+
+        private bool CanExecuteStartCalibration()
+        {
+            return (_calibrationService != null) ? !_calibrationService.IsRunning : false;
+        }
+
+        private void OnStopCalibration()
+        {
+            if (_calibrationService != null)
+            {
+                _calibrationService.CancelServiceAsync();
+            }
+        }
+
+        private bool CanExecuteStopCalibration()
+        {
+            return (_calibrationService != null) ? _calibrationService.IsRunning : false;
+        }
         #endregion
 
         #region Constructor
@@ -789,62 +511,7 @@ namespace MVVM_WPF_Checkers.ViewModels
             this.Board = new ObservableCollection<FieldState>();
             InitializeServices();
 
-            Red_R_min = 194;
-            Red_R_max = 255;
-
-            Red_G_min = 54;
-            Red_G_max = 151;
-
-            Red_B_min = 33;
-            Red_B_max = 122;
-
-
-            Green_R_min = 60;
-            Green_R_max = 169;
-
-            Green_G_min = 175;
-            Green_G_max = 255;
-
-            Green_B_min = 67;
-            Green_B_max = 191;
-
-
-            Yellow_R_min = 220;
-            Yellow_R_max = 255;
-
-            Yellow_G_min = 216;
-            Yellow_G_max = 255;
-
-            Yellow_B_min = 73;
-            Yellow_B_max = 205;
-
-            Blue_R_min = 0;
-            Blue_R_max = 72;
-
-            Blue_G_min = 161;
-            Blue_G_max = 255;
-
-            Blue_B_min = 202;
-            Blue_B_max = 255;
-
-            White_R_min = 220;
-            White_R_max = 255;
-
-            White_G_min = 220;
-            White_G_max = 255;
-
-            White_B_min = 220;
-            White_B_max = 255;
-
-            Black_R_min = 0;
-            Black_R_max = 130;
-
-            Black_G_min = 0;
-            Black_G_max = 130;
-
-            Black_B_min = 0;
-            Black_B_max = 130;
-
+            Deviation = 10;
         }
 
         #region Initialize Services
@@ -854,9 +521,17 @@ namespace MVVM_WPF_Checkers.ViewModels
             _webCamService.ImageChanged += _webCamService_ImageChanged;
             _webCamService.ValidatedImageChanged += _webCamService_ValidatedImageChanged;
             _webCamService.BoardChanged += _webCamService_BoardChanged;
+
+            _calibrationService = new CalibrationService();
+            _calibrationService.RedPixelsModeChanged += _calibrationService_RedPixelsModeChanged;
+            _calibrationService.GreenPixelsModeChanged += _calibrationService_GreenPixelsModeChanged;
+            _calibrationService.BluePixelsModeChanged += _calibrationService_BluePixelsModeChanged;
+            _calibrationService.YellowPixelsModeChanged += _calibrationService_YellowPixelsModeChanged;
+            _calibrationService.WhitePixelsModeChanged += _calibrationService_WhitePixelsModeChanged;
+            _calibrationService.BlackPixelsModeChanged += _calibrationService_BlackPixelsModeChanged;
         }
 
-        void _webCamService_BoardChanged(object sender, FieldState[,] board)
+        private void _webCamService_BoardChanged(object sender, FieldState[,] board)
         {
             var tmp = new ObservableCollection<FieldState>();
             foreach (var state in board)
@@ -874,12 +549,99 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             this.TmpImageFrame = image;
         }
+
+        #region PixelsModeChanged
+        private void _calibrationService_RedPixelsModeChanged(double r, double g, double b)
+        {
+            RedR = r;
+            RedG = g;
+            RedB = b;
+
+            _webCamService.Red_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.Red_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.Red_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.Red_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.Red_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.Red_B_min = Convert.ToInt32(b) - Deviation;
+        }
+
+        private void _calibrationService_GreenPixelsModeChanged(double r, double g, double b)
+        {
+            GreenR = r;
+            GreenG = g;
+            GreenB = b;
+
+            _webCamService.Green_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.Green_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.Green_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.Green_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.Green_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.Green_B_min = Convert.ToInt32(b) - Deviation;
+        }
+
+        private void _calibrationService_BluePixelsModeChanged(double r, double g, double b)
+        {
+            BlueR = r;
+            BlueG = g;
+            BlueB = b;
+
+            _webCamService.Blue_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.Blue_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.Blue_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.Blue_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.Blue_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.Blue_B_min = Convert.ToInt32(b) - Deviation;
+        }
+
+        private void _calibrationService_YellowPixelsModeChanged(double r, double g, double b)
+        {
+            YellowR = r;
+            YellowG = g;
+            YellowB = b;
+
+            _webCamService.Yellow_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.Yellow_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.Yellow_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.Yellow_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.Yellow_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.Yellow_B_min = Convert.ToInt32(b) - Deviation;
+        }
+
+        private void _calibrationService_WhitePixelsModeChanged(double r, double g, double b)
+        {
+            WhiteR = r;
+            WhiteG = g;
+            WhiteB = b;
+
+            _webCamService.White_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.White_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.White_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.White_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.White_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.White_B_min = Convert.ToInt32(b) - Deviation;
+        }
+
+        private void _calibrationService_BlackPixelsModeChanged(double r, double g, double b)
+        {
+            BlackR = r;
+            BlackG = g;
+            BlackB = b;
+
+            _webCamService.Black_R_max = Convert.ToInt32(r) + Deviation;
+            _webCamService.Black_R_min = Convert.ToInt32(r) - Deviation;
+            _webCamService.Black_G_max = Convert.ToInt32(g) + Deviation;
+            _webCamService.Black_G_min = Convert.ToInt32(g) - Deviation;
+            _webCamService.Black_B_max = Convert.ToInt32(b) + Deviation;
+            _webCamService.Black_B_min = Convert.ToInt32(b) - Deviation;
+        }
+        #endregion
         #endregion
 
         #endregion
 
         #region Members
         private WebCamService _webCamService;
+        private CalibrationService _calibrationService;
         #endregion
     }
 }

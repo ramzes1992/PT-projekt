@@ -782,7 +782,7 @@ namespace MVVM_WPF_Checkers.Services
         #endregion
 
         #region Public Methods
-        public void RunWServiceAsync()
+        public void RunServiceAsync()
         {
             _webCamWorker.RunWorkerAsync();
             _validationWorker.RunWorkerAsync();
@@ -820,7 +820,6 @@ namespace MVVM_WPF_Checkers.Services
             }
         }
 
-        //dodane------
         private void RaiseBoardChangedEvent(FieldState[,] board)
         {
             if (BoardChanged != null)
@@ -828,7 +827,6 @@ namespace MVVM_WPF_Checkers.Services
                 BoardChanged(this, board);
             }
         }
-        //------------
 
         private Tuple<FieldCounter[,], Image<Bgr, Byte>> getFileStateTabel(Image<Bgr, Byte> boardPlaceImage)
         {
@@ -933,6 +931,60 @@ namespace MVVM_WPF_Checkers.Services
             _syncImageObcject = new object();
             CurrentCapture = new Image<Bgr, byte>(640, 480);
             InitializeWorkers();
+
+            Red_R_min = 194;
+            Red_R_max = 255;
+
+            Red_G_min = 54;
+            Red_G_max = 151;
+
+            Red_B_min = 33;
+            Red_B_max = 122;
+
+            Green_R_min = 60;
+            Green_R_max = 169;
+
+            Green_G_min = 175;
+            Green_G_max = 255;
+
+            Green_B_min = 67;
+            Green_B_max = 191;
+
+            Yellow_R_min = 220;
+            Yellow_R_max = 255;
+
+            Yellow_G_min = 216;
+            Yellow_G_max = 255;
+
+            Yellow_B_min = 73;
+            Yellow_B_max = 205;
+
+            Blue_R_min = 0;
+            Blue_R_max = 72;
+
+            Blue_G_min = 161;
+            Blue_G_max = 255;
+
+            Blue_B_min = 202;
+            Blue_B_max = 255;
+
+            White_R_min = 220;
+            White_R_max = 255;
+
+            White_G_min = 220;
+            White_G_max = 255;
+
+            White_B_min = 220;
+            White_B_max = 255;
+
+            Black_R_min = 0;
+            Black_R_max = 130;
+
+            Black_G_min = 0;
+            Black_G_max = 130;
+
+            Black_B_min = 0;
+            Black_B_max = 130;
         }
 
         #region InitializeWorkers
@@ -948,30 +1000,37 @@ namespace MVVM_WPF_Checkers.Services
             _validationWorker.DoWork += _validationWorker_DoWork;
             _validationWorker.RunWorkerCompleted += _validationWorker_RunWorkerCompleted;
         }
-        void _webCamWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void _webCamWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Console.WriteLine("WebCamService has stopped");
+        }
+        private void _validationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Console.WriteLine("ValidationService has stopped");
+        }
+        #endregion
+
+        #endregion
+
+        #region Work
+
+        private void _webCamWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             while (!_webCamWorker.CancellationPending)
             {
-
                 CurrentCapture = capture.QueryFrame().Copy();
                 RaiseImageChangedEvent(CurrentCapture.Bitmap);
             }
         }
-        void _webCamWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Console.WriteLine("WebCamService has stopped");
-        }
-        void _validationWorker_DoWork(object sender, DoWorkEventArgs e)
+
+        private void _validationWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             while (!_validationWorker.CancellationPending)
             {
-                #region konwersja + kolory
+                #region Some Shit
 
                 Image<Bgr, Byte> ImageFrameClone = CurrentCapture.Copy(new Rectangle(0, 0, 480, 480));
 
-                //Bitmap ImageFrameBitmap = ImageFrame.Copy().ToBitmap();
-                //Bitmap ImageFrameBitmapCut = ImageFrameBitmap.Clone(new System.Drawing.Rectangle(0, 0, 480, 480), ImageFrameBitmap.PixelFormat);
-                
                 Tuple<FieldCounter[,], Image<Bgr, Byte>> result = getFileStateTabel(ImageFrameClone);
                 ImageFrameClone = result.Item2;
 
@@ -1032,11 +1091,6 @@ namespace MVVM_WPF_Checkers.Services
                 #endregion
             }
         }
-        void _validationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Console.WriteLine("ValidationService has stopped");
-        }
-        #endregion
 
         #endregion
     }

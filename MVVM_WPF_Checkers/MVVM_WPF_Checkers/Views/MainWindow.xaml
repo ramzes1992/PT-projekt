@@ -88,12 +88,12 @@
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="360,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="420,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="480,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
-                    
-                    
+
+
                     <!--Kolory-->
                     <!--Czerwony-->
                     <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    
+
                     <!--Zielony-->
                     <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
@@ -119,156 +119,82 @@
 
                     <Image Grid.Column="0" Source="{Binding TmpImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="350" Height="350" Stretch="Uniform"/>
 
-                    <Viewbox Grid.Column="1" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Button Height="20" Width="Auto" Content="Start Calibration" Command="{Binding RunCalibrationCommand}"/>
+                        <Button Height="20" Width="Auto" Content="Stop Calibration" Command="{Binding StopCalibrationCommand}" Name="v_Button_StopCalibration"/>
+                    </StackPanel>
 
-                        <StackPanel Height="Auto" Width="Auto">
 
+                    <StackPanel VerticalAlignment="Bottom" Margin="0,10,0,10">
+                        <Slider Name="v_Slider_Deviation" Height="15" Width="300" Minimum="0" Maximum="255" Value="{Binding Deviation, Mode=TwoWay}" IsEnabled="{Binding  ElementName=v_Button_StopCalibration, Path=IsEnabled}"/>
+                    </StackPanel>
+
+                    <Viewbox Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Stretch="Uniform" ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                        <StackPanel >
+                            <TextBlock Text="{Binding ElementName=v_Slider_Deviation, Path=Value}" FontSize="20"/>
                             <!-- Red -->
                             <Label Content="Red"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding RedR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding RedG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding RedB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Red_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Red_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Red_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Red_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding RedRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
 
                             <!-- Green -->
                             <Label Content="Green"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding GreenR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding GreenG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding GreenB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Green_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Green_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Green_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Green_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding GreenRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
 
 
                             <!-- Blue -->
                             <Label Content="Blue"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding BlueR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlueG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlueB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Blue_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Blue_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Blue_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Blue_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding BlueRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
 
 
                             <!-- Yellow -->
                             <Label Content="Yellow"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding YellowR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding YellowG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding YellowB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Yellow_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Yellow_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Yellow_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Yellow_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding YellowRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
 
 
                             <!-- White -->
                             <Label Content="White"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding WhiteR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding WhiteG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding WhiteB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_White_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding White_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding White_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_White_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding WhiteRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
 
 
                             <!-- Black -->
                             <Label Content="Black"/>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="R" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_R, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_R" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_R_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_R_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_R, Path=UpperValue, StringFormat={}{0:#}}"/>
+                                <TextBlock Text="{Binding BlackR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlackG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlackB, StringFormat=B:{0:0}}" Margin="6,0"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="G" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_G, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_G" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_G_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_G_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_G, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="B" Margin="5,0"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_B, Path=LowerValue, StringFormat={}{0:#}}"/>
-                                <RangeSlider:RangeSlider x:Name="v_RangeSlider_Black_B" Height="15" Width="300" Minimum="0" Maximum="255" Margin="0,3,0,3" LowerValue="{Binding Black_B_min, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}" UpperValue="{Binding Black_B_max, Converter={StaticResource IntToDoubleConverter}, Mode=TwoWay}"/>
-                                <TextBox Text="{Binding ElementName=v_RangeSlider_Black_B, Path=UpperValue, StringFormat={}{0:#}}"/>
-                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding BlackRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+                            
                         </StackPanel>
                     </Viewbox>
                 </Grid>
-                
+
             </TabItem>
         </TabControl>
 
