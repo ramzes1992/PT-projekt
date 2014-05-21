@@ -144,24 +144,31 @@ namespace MVVM_WPF_Checkers.Services
 
         private void CapturePawn(FieldState[,] boardState, int counter, int currentX, int currentY, int moveX, int moveY)
         {
-            if (boardState[currentX, currentY] != FieldState.RedPawn) return;
+
             var opponentPawnX = currentX + moveX;
             var opponentPawnY = currentY + moveY;
-            if (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) return;
             var newX = currentX + (2*moveX);
             var newY = currentY + (2*moveY);
-            if (newX < 0 || newX > 7 || newY < 0 || newY > 7) return;
-            if (boardState[opponentPawnX, opponentPawnY] != FieldState.YellowPawn) return;
-            if (boardState[newX, newY] != FieldState.Empty) return;
+
+            if ( 
+                (boardState[currentX, currentY] != FieldState.RedPawn) ||
+                (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) ||
+                (newX < 0 || newX > 7 || newY < 0 || newY > 7) ||
+                (boardState[opponentPawnX, opponentPawnY] != FieldState.YellowPawn) ||
+                (boardState[newX, newY] != FieldState.Empty)
+                )
+            {
+                if (counter > 0) _possibleCapture.Add(new Capture(counter, boardState));
+                return;
+            }
+
             var tmpBoard = (FieldState[,])boardState.Clone();
             tmpBoard[newX, newY] = tmpBoard[currentX, currentY];
             tmpBoard[currentX, currentY] = FieldState.Empty;
             tmpBoard[opponentPawnX, opponentPawnY] = FieldState.Empty;
-            //sprawdzam jeszcze raz
-            //jak sprawdzanie sie nie powiodło to add
-            CapturePawns(tmpBoard, counter++, newX, newY);
-            _possibleCapture.Add(new Capture(1, tmpBoard));
+            CapturePawns(tmpBoard, ++counter, newX, newY);
         }
+
 
         public List<Pawn> GetDiff(FieldState[,] baseArray = null, FieldState[,] compareArray = null)
         {
