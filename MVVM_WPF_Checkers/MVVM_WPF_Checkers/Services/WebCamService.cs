@@ -50,6 +50,9 @@ namespace MVVM_WPF_Checkers.Services
 
         public event ValidatedImageChangedEventHndler ValidatedImageChanged;
         public delegate void ValidatedImageChangedEventHndler(object sender, Bitmap image);
+
+        public event BoardChangedEventHandler BoardChanged;
+        public delegate void BoardChangedEventHandler(object sender, FieldState[,] board);
         #endregion
 
         #region Properties
@@ -779,7 +782,6 @@ namespace MVVM_WPF_Checkers.Services
         #endregion
 
         #region Public Methods
-
         public void RunWServiceAsync()
         {
             _webCamWorker.RunWorkerAsync();
@@ -817,6 +819,16 @@ namespace MVVM_WPF_Checkers.Services
                 ValidatedImageChanged(this, image);
             }
         }
+
+        //dodane------
+        private void RaiseBoardChangedEvent(FieldState[,] board)
+        {
+            if (BoardChanged != null)
+            {
+                BoardChanged(this, board);
+            }
+        }
+        //------------
 
         private Tuple<FieldCounter[,], Image<Bgr, Byte>> getFileStateTabel(Image<Bgr, Byte> boardPlaceImage)
         {
@@ -943,11 +955,6 @@ namespace MVVM_WPF_Checkers.Services
 
                 CurrentCapture = capture.QueryFrame().Copy();
                 RaiseImageChangedEvent(CurrentCapture.Bitmap);
-
-                //v.II
-                //Image<Bgr, Byte> tmp = capture.QueryFrame().Copy();
-                //CurrentCapture = tmp;
-                //RaiseImageChangedEvent(tmp.Bitmap);
             }
         }
         void _webCamWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -964,69 +971,62 @@ namespace MVVM_WPF_Checkers.Services
 
                 //Bitmap ImageFrameBitmap = ImageFrame.Copy().ToBitmap();
                 //Bitmap ImageFrameBitmapCut = ImageFrameBitmap.Clone(new System.Drawing.Rectangle(0, 0, 480, 480), ImageFrameBitmap.PixelFormat);
-                FieldState[,] fieldStareTable;
-                fieldStareTable = new FieldState[8, 8];
+                
                 Tuple<FieldCounter[,], Image<Bgr, Byte>> result = getFileStateTabel(ImageFrameClone);
                 ImageFrameClone = result.Item2;
 
 
-                //bool playerMakeMove = false;
+                FieldState[,] fieldStareTable;
+                fieldStareTable = new FieldState[8, 8];
+                bool playerMakeMove = false;
 
-                //for (int i = 0; i < 8; i++)
-                //{
-                //    for (int j = 0; j < 8; j++)
-                //    {
-                //        int[] fieldValues = { result.Item1[i, j].white, result.Item1[i, j].black, result.Item1[i, j].red, result.Item1[i, j].green, result.Item1[i, j].blue, result.Item1[i, j].yellow, result.Item1[i, j].undefined };
-                //        int dominationColor = fieldValues.Max();
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        int[] fieldValues = { result.Item1[i, j].white, result.Item1[i, j].black, result.Item1[i, j].red, result.Item1[i, j].green, result.Item1[i, j].blue, result.Item1[i, j].yellow, result.Item1[i, j].undefined };
+                        int dominationColor = fieldValues.Max();
 
-                //        if (result.Item1[i, j].white == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.Empty;
-                //        }
-                //        else if (result.Item1[i, j].black == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.Empty;
-                //        }
-                //        else if (result.Item1[i, j].red == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.RedPawn;
-                //        }
-                //        else if (result.Item1[i, j].green == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.GreenPawn;
-                //        }
-                //        else if (result.Item1[i, j].yellow == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.YellowPawn;
-                //        }
-                //        else if (result.Item1[i, j].blue == dominationColor)
-                //        {
-                //            fieldStareTable[i, j] = FieldState.BluePawn;
-                //        }
-                //        else if (result.Item1[i, j].undefined == dominationColor)
-                //        {
-                //            playerMakeMove = true;
-                //            break;
-                //        }
-                //    }
-                //    if (playerMakeMove)
-                //    {
-                //        break;
-                //    }
-                //}
+                        if (result.Item1[i, j].white == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.Empty;
+                        }
+                        else if (result.Item1[i, j].black == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.Empty;
+                        }
+                        else if (result.Item1[i, j].red == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.RedPawn;
+                        }
+                        else if (result.Item1[i, j].green == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.GreenPawn;
+                        }
+                        else if (result.Item1[i, j].yellow == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.YellowPawn;
+                        }
+                        else if (result.Item1[i, j].blue == dominationColor)
+                        {
+                            fieldStareTable[i, j] = FieldState.BluePawn;
+                        }
+                        else if (result.Item1[i, j].undefined == dominationColor)
+                        {
+                            playerMakeMove = true;
+                            break;
+                        }
+                    }
+                    if (playerMakeMove)
+                    {
+                        break;
+                    }
+                }
 
-                //if(!playerMakeMove)
-                //{
-
-                //}
-                ////ImageFrameClone = getFileStateTabel(ImageFrameClone);
-
-                #region kolory
-
-
-
-                #endregion
-
+                if (!playerMakeMove)
+                {
+                    RaiseBoardChangedEvent(fieldStareTable);
+                }
 
                 RaiseValidatedImageChangedEvent(ImageFrameClone.Bitmap);
                 #endregion

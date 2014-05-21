@@ -762,11 +762,6 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         private void OnRunWebCam()
         {
-            if (_testService != null) // TODO caly ten warunek do wyjebania
-            {
-                _testService.RunServiceAsync();
-            }
-
             if (_webCamService != null)
             {
                 _webCamService.RunWServiceAsync();
@@ -775,11 +770,6 @@ namespace MVVM_WPF_Checkers.ViewModels
 
         private void OnStopWebCam()
         {
-            if (_testService != null) // TODO ca³y ten warunek do wyjebania
-            {
-                _testService.CancelServiceAsync();
-            }
-
             if (_webCamService != null)
             {
                 _webCamService.CancelServiceAsync();
@@ -799,42 +789,42 @@ namespace MVVM_WPF_Checkers.ViewModels
             this.Board = new ObservableCollection<FieldState>();
             InitializeServices();
 
-            Red_R_min = 128;
+            Red_R_min = 194;
             Red_R_max = 255;
 
-            Red_G_min = 0;
-            Red_G_max = 110;
+            Red_G_min = 54;
+            Red_G_max = 151;
 
-            Red_B_min = 0;
-            Red_B_max = 97;
+            Red_B_min = 33;
+            Red_B_max = 122;
 
 
-            Green_R_min = 0;
-            Green_R_max = 102;
+            Green_R_min = 60;
+            Green_R_max = 169;
 
-            Green_G_min = 127;
+            Green_G_min = 175;
             Green_G_max = 255;
 
-            Green_B_min = 0;
-            Green_B_max = 119;
+            Green_B_min = 67;
+            Green_B_max = 191;
 
 
-            Yellow_R_min = 194;
+            Yellow_R_min = 220;
             Yellow_R_max = 255;
 
-            Yellow_G_min = 165;
-            Yellow_G_max = 240;
+            Yellow_G_min = 216;
+            Yellow_G_max = 255;
 
-            Yellow_B_min = 32;
-            Yellow_B_max = 140;
+            Yellow_B_min = 73;
+            Yellow_B_max = 205;
 
             Blue_R_min = 0;
-            Blue_R_max = 65;
+            Blue_R_max = 72;
 
-            Blue_G_min = 0;
-            Blue_G_max = 105;
+            Blue_G_min = 161;
+            Blue_G_max = 255;
 
-            Blue_B_min = 110;
+            Blue_B_min = 202;
             Blue_B_max = 255;
 
             White_R_min = 220;
@@ -847,25 +837,34 @@ namespace MVVM_WPF_Checkers.ViewModels
             White_B_max = 255;
 
             Black_R_min = 0;
-            Black_R_max = 60;
+            Black_R_max = 130;
 
             Black_G_min = 0;
-            Black_G_max = 60;
+            Black_G_max = 130;
 
             Black_B_min = 0;
-            Black_B_max = 60;
+            Black_B_max = 130;
 
         }
 
         #region Initialize Services
         private void InitializeServices()
         {
-            _testService = new TestService();
-            _testService.BoardChanged += _testService_BoardChanged;
-
             _webCamService = new WebCamService();
             _webCamService.ImageChanged += _webCamService_ImageChanged;
             _webCamService.ValidatedImageChanged += _webCamService_ValidatedImageChanged;
+            _webCamService.BoardChanged += _webCamService_BoardChanged;
+        }
+
+        void _webCamService_BoardChanged(object sender, FieldState[,] board)
+        {
+            var tmp = new ObservableCollection<FieldState>();
+            foreach (var state in board)
+            {
+                tmp.Add(state);
+            }
+
+            this.Board = tmp;
         }
         private void _webCamService_ImageChanged(object sender, System.Drawing.Bitmap image)
         {
@@ -875,20 +874,11 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             this.TmpImageFrame = image;
         }
-        private void _testService_BoardChanged(object sender, FieldState[,] board)
-        {
-            this.Board = new ObservableCollection<FieldState>();
-            foreach (var state in board)
-            {
-                this.Board.Add(state);
-            }
-        }
         #endregion
 
         #endregion
 
         #region Members
-        private TestService _testService;
         private WebCamService _webCamService;
         #endregion
     }

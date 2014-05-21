@@ -39,7 +39,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="320" Height="240" Stretch="Uniform"/>
+                    <StackPanel Grid.Column="0">
+                        <Image Source="{Binding TmpImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="250" Height="250" Stretch="Uniform"/>
+                        <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="320" Height="240" Stretch="Uniform"/>
+                    </StackPanel>
 
                     <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
                     <ListBox ItemsSource="{Binding Board, Converter={StaticResource FieldsStatesCollectionToImagesCollectionConverter}}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionMode="Single">
@@ -64,17 +67,18 @@
                 <Grid>
                     <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="640" Height="480" Stretch="Uniform" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,300,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,360,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,420,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Rectangle Height="1" Width="640" Fill="Red" Margin="0,480,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <!--Poziome-->
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,300,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,360,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,420,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,480,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-
+                    <!--Pionowe-->
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="0,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="60,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="120,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
@@ -84,6 +88,26 @@
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="360,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="420,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
                     <Rectangle Height="480" Width="1" Fill="Red" Margin="480,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    
+                    
+                    <!--Kolory-->
+                    <!--Czerwony-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    
+                    <!--Zielony-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Niebieski-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,170,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Żółty-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Biały-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,330,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Czarny-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,410,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Kalibracja - kolory">
