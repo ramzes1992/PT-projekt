@@ -126,13 +126,14 @@
 
 
                     <StackPanel VerticalAlignment="Bottom" Margin="0,10,0,10">
+                        <TextBlock Text="Deviation"/>
+                        <TextBlock Text="{Binding ElementName=v_Slider_Deviation, Path=Value}" FontSize="20"/>
                         <Slider Name="v_Slider_Deviation" Height="15" Width="300" Minimum="0" Maximum="255" Value="{Binding Deviation, Mode=TwoWay}" IsEnabled="{Binding  ElementName=v_Button_StopCalibration, Path=IsEnabled}"/>
                     </StackPanel>
 
                     <Viewbox Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Stretch="Uniform" ScrollViewer.VerticalScrollBarVisibility="Visible">
 
                         <StackPanel >
-                            <TextBlock Text="{Binding ElementName=v_Slider_Deviation, Path=Value}" FontSize="20"/>
                             <!-- Red -->
                             <Label Content="Red"/>
                             <StackPanel Orientation="Horizontal">

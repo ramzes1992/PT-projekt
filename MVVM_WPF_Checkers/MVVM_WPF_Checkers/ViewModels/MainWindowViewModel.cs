@@ -511,7 +511,7 @@ namespace MVVM_WPF_Checkers.ViewModels
             this.Board = new ObservableCollection<FieldState>();
             InitializeServices();
 
-            Deviation = 10;
+            Deviation = 50;
         }
 
         #region Initialize Services
