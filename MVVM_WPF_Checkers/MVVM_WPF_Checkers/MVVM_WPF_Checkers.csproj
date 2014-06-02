@@ -94,8 +94,6 @@
     <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="Helpers\NotificationObject.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
-    <Compile Include="Models\FieldsState.cs" />
-    <Compile Include="Services\LogicService.cs" />
     <Compile Include="Services\TestService.cs" />
     <Compile Include="Services\WebCamService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -140,6 +138,15 @@
   <ItemGroup>
     <Resource Include="Views\Images\testChess1.jpg" />
     <Resource Include="Views\Images\testChess2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckersLogic\CheckersLogic.csproj">
+      <Project>{A6AB6FD9-829D-41B8-9DBA-FEC3A5569AEE}</Project>
+      <Name>CheckersLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

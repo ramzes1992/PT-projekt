@@ -3,72 +3,51 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-
 using MVVM_WPF_Checkers.Models;
-using MVVM_WPF_Checkers.Services;
 
 namespace TestBoard_WPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private LogicService _testLogic;
+        private readonly CheckersLogic.CheckersLogic _testCheckersLogic;
         private string _messageLog;
         private int _messageLogCounter;
 
         public MainWindow()
         {
             InitializeComponent();
-            _images = new ObservableCollection<Image>();
+            Images = new ObservableCollection<Image>();
             v_ListBox_Board.DataContext = Images;
-            _testLogic = new LogicService();
+            _testCheckersLogic = new CheckersLogic.CheckersLogic();
         }
 
-        public ObservableCollection<Image> Images
-        {
-            get
-            {
-                return _images;
-            }
+        public ObservableCollection<Image> Images { get; private set; }
 
-            private set
-            {
-                _images = value;
-            }
-        }
-        private ObservableCollection<Image> _images;
-
-        BitmapImage RedPawn = Converter.StringToBitmapImageConverter("Images/RedPawn.png");
-        BitmapImage YellowPawn = Converter.StringToBitmapImageConverter("Images/YellowPawn.png");
-        BitmapImage BluePawn = Converter.StringToBitmapImageConverter("Images/BluePawn.png");
-        BitmapImage GreenPawn = Converter.StringToBitmapImageConverter("Images/GreenPawn.png");
+        readonly BitmapImage RedPawn = Converter.StringToBitmapImageConverter("Images/RedPawn.png");
+        readonly BitmapImage YellowPawn = Converter.StringToBitmapImageConverter("Images/YellowPawn.png");
+        readonly BitmapImage BluePawn = Converter.StringToBitmapImageConverter("Images/BluePawn.png");
+        readonly BitmapImage GreenPawn = Converter.StringToBitmapImageConverter("Images/GreenPawn.png");
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < 8; i++)//64 fiels on board
-            {
-                for (int j = 0; j < 8; j++)
+            for (var i = 0; i < 8; i++)//64 fiels on board
+                for (var j = 0; j < 8; j++)
                 {
                     var tag = new Tuple<int, int>(i, j);
                     Images.Add(new Image() { Visibility = System.Windows.Visibility.Hidden, Tag = tag });
                 }
-            }
         }
 
-        private int[,] boardArray = new int[8, 8];//do testów
-        private int[,] previousBoardArray = new int[8, 8];
+        private readonly int[,] _boardArray = new int[8, 8];
         private void v_ListBox_Board_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var tag = (v_ListBox_Board.SelectedItem as Image).Tag as Tuple<int, int>;
-            //MessageBox.Show(String.Format("Clicked: x={0};y={1}",tag.Item1+1,tag.Item2+1));
 
-            boardArray[tag.Item1, tag.Item2]++;
-            if (boardArray[tag.Item1, tag.Item2] > 4) boardArray[tag.Item1, tag.Item2] = 0;
+            _boardArray[tag.Item1, tag.Item2]++;
+            if (_boardArray[tag.Item1, tag.Item2] > 4) _boardArray[tag.Item1, tag.Item2] = 0;
 
-            int index = tag.Item1 * 8 + tag.Item2;
-            switch (boardArray[tag.Item1, tag.Item2] % 5)
+            var index = tag.Item1 * 8 + tag.Item2;
+            switch (_boardArray[tag.Item1, tag.Item2] % 5)
             {
                 case 0:
                     Images[index].Visibility = Visibility.Hidden;
@@ -103,8 +82,8 @@ namespace TestBoard_WPF
         {
             for (var i = offset; i < 8; i += 2)
             {
-                int index = start * 8 + i;
-                boardArray[start, i] = pawnType;
+                var index = start * 8 + i;
+                _boardArray[start, i] = pawnType;
                 Images[index].Visibility = Visibility.Visible;
                 Images[index].Source = pwanImage;
             }  
@@ -115,17 +94,16 @@ namespace TestBoard_WPF
             for (var i = 0; i < 8; i ++)
                 for (var j = 0; j < 8; j ++)
                 {
-                    int index = i * 8 + j;
-                    boardArray[i, j] = 0;
+                    var index = i * 8 + j;
+                    _boardArray[i, j] = 0;
                     Images[index].Visibility = Visibility.Hidden;
                 }
         }
 
         private void Button_SetInit_Click(object sender, RoutedEventArgs e)
         {
-            _testLogic.InitBoard(boardArrayToFieldState());
+            _testCheckersLogic.InitBoard(boardArrayToFieldState());
             TestLog("Init Ready");
-            Game_State.Text = _testLogic.StateMessage;
             Move_Button.IsEnabled = true;
             Back_Button.IsEnabled = false;
         }
@@ -135,12 +113,13 @@ namespace TestBoard_WPF
             Clear();
             DrawPawnsLine(0, 0, 1, RedPawn);
             DrawPawnsLine(1, 1, 1, RedPawn);
+            DrawPawnsLine(2, 0, 1, RedPawn);
+            DrawPawnsLine(5, 1, 2, YellowPawn);
             DrawPawnsLine(6, 0, 2, YellowPawn);
             DrawPawnsLine(7, 1, 2, YellowPawn);
-            _testLogic.InitBoard(boardArrayToFieldState());
-            TestLog(_testLogic.InitialValid());
+            _testCheckersLogic.InitBoard(boardArrayToFieldState());
+            TestLog(_testCheckersLogic.InitialValid());
             TestLog("Init Ready");
-            Game_State.Text = _testLogic.StateMessage;
             Move_Button.IsEnabled = true;
             Back_Button.IsEnabled = false;
         }
@@ -152,7 +131,7 @@ namespace TestBoard_WPF
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    switch (boardArray[i, j])
+                    switch (_boardArray[i, j])
                     {
                         case 0:
                             result[i, j] = FieldState.Empty;
@@ -180,26 +159,29 @@ namespace TestBoard_WPF
 
         private void Button_Move_Click(object sender, RoutedEventArgs e)
         {
-            previousBoardArray = (int[,])boardArray.Clone();
             var board = boardArrayToFieldState();
-            _testLogic.UpdateBoard(board);
-            var validateMessage = _testLogic.Validete();
+            _testCheckersLogic.UpdateBoard(board);
+            var validateMessage = _testCheckersLogic.Validete();
             InvalidMove(validateMessage);
             TestLog(validateMessage);
-            Game_State.Text = _testLogic.StateMessage;
+        }
+
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
         }
 
         private void Button_Back_Click(object sender, RoutedEventArgs e)
         {
 
-            var array = _testLogic.GetCorrectBoard();
+            var array = _testCheckersLogic.GetCorrectBoard();
             for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
-                    boardArray[i, j] = (int) array[i, j];
+                    _boardArray[i, j] = (int) array[i, j];
 
                     int index = i * 8 + j;
-                    switch (boardArray[i, j] % 5)
+                    switch (_boardArray[i, j] % 5)
                     {
                         case 0:
                             Images[index].Visibility = Visibility.Hidden;
@@ -228,6 +210,7 @@ namespace TestBoard_WPF
 
             Back_Button.IsEnabled = false;
             Move_Button.IsEnabled = true;
+            TestLog("Back");
         }
 
         private void InvalidMove(string message)

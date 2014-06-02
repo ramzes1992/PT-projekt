@@ -11,6 +11,7 @@
         <Button Content="move" Name="Move_Button" IsEnabled="false" Click="Button_Move_Click" Margin="215,497,514,10" Grid.Row="1"/>
         <Button Content="Init" Click="Button_Init_Click" Margin="387,497,342,10" Grid.Row="1"/>
         <Button Content="Set as Init" Click="Button_SetInit_Click" Margin="301,497,421,10" Grid.Row="1"/>
+        <Button Content="Clear" Click="Button_Clear_Click" Margin="459,497,270,10" Grid.Row="1"/>
         <Grid Grid.Row="1" Margin="0,4,0,-4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="135*"/>

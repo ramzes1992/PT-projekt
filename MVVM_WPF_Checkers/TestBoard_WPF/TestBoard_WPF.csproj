@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{17CE66D8-9243-4E2A-8660-F3DDF06EBC53}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestBoard_WPF</RootNamespace>
     <AssemblyName>TestBoard_WPF</AssemblyName>
@@ -32,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -102,6 +105,10 @@
     <Resource Include="Images\YellowPawn.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CheckersLogic\CheckersLogic.csproj">
+      <Project>{A6AB6FD9-829D-41B8-9DBA-FEC3A5569AEE}</Project>
+      <Name>CheckersLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVVM_WPF_Checkers\MVVM_WPF_Checkers.csproj">
       <Project>{6a23e5ba-99da-47ef-a6fa-87df531e4158}</Project>
       <Name>MVVM_WPF_Checkers</Name>
