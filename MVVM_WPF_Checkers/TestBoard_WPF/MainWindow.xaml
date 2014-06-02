@@ -7,8 +7,11 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Content="move" Click="Button_Move_Click" Margin="0,0,0,10"/>
-        <Grid Grid.Row="1">
+        <Button Content="back" Name="Back_Button" IsEnabled="false" Click="Button_Back_Click" Margin="133,497,596,10" Grid.Row="1"/>
+        <Button Content="move" Name="Move_Button" IsEnabled="false" Click="Button_Move_Click" Margin="215,497,514,10" Grid.Row="1"/>
+        <Button Content="Init" Click="Button_Init_Click" Margin="387,497,342,10" Grid.Row="1"/>
+        <Button Content="Set as Init" Click="Button_SetInit_Click" Margin="301,497,421,10" Grid.Row="1"/>
+        <Grid Grid.Row="1" Margin="0,4,0,-4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="135*"/>
                 <ColumnDefinition Width="202*"/>
@@ -39,8 +42,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button Content="Init" Click="Button_Init_Click" Grid.ColumnSpan="6" Margin="0,-10,0,519"/>
-            <Button Content="Clear" Click="Button_Clear_Click" Grid.ColumnSpan="6" Margin="0,10,0,499"/>
+            <TextBlock Grid.Column="5" Name="Game_State" HorizontalAlignment="Left" Height="85" Margin="3,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="344"/>
             <!--<WrapPanel Grid.Column="1" Orientation="Horizontal" ItemHeight="43" ItemWidth="43" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346">
                 <WrapPanel.Resources>
                     <Style TargetType="Image">

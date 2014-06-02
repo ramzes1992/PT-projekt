@@ -58,12 +58,14 @@ namespace TestBoard_WPF
         }
 
         private int[,] boardArray = new int[8, 8];//do testów
+        private int[,] previousBoardArray = new int[8, 8];
         private void v_ListBox_Board_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var tag = (v_ListBox_Board.SelectedItem as Image).Tag as Tuple<int, int>;
             //MessageBox.Show(String.Format("Clicked: x={0};y={1}",tag.Item1+1,tag.Item2+1));
 
             boardArray[tag.Item1, tag.Item2]++;
+            if (boardArray[tag.Item1, tag.Item2] > 4) boardArray[tag.Item1, tag.Item2] = 0;
 
             int index = tag.Item1 * 8 + tag.Item2;
             switch (boardArray[tag.Item1, tag.Item2] % 5)
@@ -119,10 +121,13 @@ namespace TestBoard_WPF
                 }
         }
 
-        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        private void Button_SetInit_Click(object sender, RoutedEventArgs e)
         {
-            Clear();
-            _testLogic.UpdateBoard(boardArrayToFieldState());
+            _testLogic.InitBoard(boardArrayToFieldState());
+            TestLog("Init Ready");
+            Game_State.Text = _testLogic.StateMessage;
+            Move_Button.IsEnabled = true;
+            Back_Button.IsEnabled = false;
         }
 
         private void Button_Init_Click(object sender, RoutedEventArgs e)
@@ -132,8 +137,12 @@ namespace TestBoard_WPF
             DrawPawnsLine(1, 1, 1, RedPawn);
             DrawPawnsLine(6, 0, 2, YellowPawn);
             DrawPawnsLine(7, 1, 2, YellowPawn);
-            _testLogic.UpdateBoard(boardArrayToFieldState());
+            _testLogic.InitBoard(boardArrayToFieldState());
             TestLog(_testLogic.InitialValid());
+            TestLog("Init Ready");
+            Game_State.Text = _testLogic.StateMessage;
+            Move_Button.IsEnabled = true;
+            Back_Button.IsEnabled = false;
         }
 
         private FieldState[,] boardArrayToFieldState()
@@ -171,8 +180,62 @@ namespace TestBoard_WPF
 
         private void Button_Move_Click(object sender, RoutedEventArgs e)
         {
-            _testLogic.UpdateBoard(boardArrayToFieldState());
-            TestLog(_testLogic.Validete());
+            previousBoardArray = (int[,])boardArray.Clone();
+            var board = boardArrayToFieldState();
+            _testLogic.UpdateBoard(board);
+            var validateMessage = _testLogic.Validete();
+            InvalidMove(validateMessage);
+            TestLog(validateMessage);
+            Game_State.Text = _testLogic.StateMessage;
+        }
+
+        private void Button_Back_Click(object sender, RoutedEventArgs e)
+        {
+
+            var array = _testLogic.GetCorrectBoard();
+            for (var i = 0; i < 8; i++)
+                for (var j = 0; j < 8; j++)
+                {
+                    boardArray[i, j] = (int) array[i, j];
+
+                    int index = i * 8 + j;
+                    switch (boardArray[i, j] % 5)
+                    {
+                        case 0:
+                            Images[index].Visibility = Visibility.Hidden;
+                            break;
+                        case 1:
+                            Images[index].Visibility = Visibility.Visible;
+                            Images[index].Source = RedPawn;
+                            break;
+                        case 2:
+                            Images[index].Visibility = Visibility.Visible;
+                            Images[index].Source = YellowPawn;
+                            break;
+                        case 3:
+                            Images[index].Visibility = Visibility.Visible;
+                            Images[index].Source = BluePawn;
+                            break;
+                        case 4:
+                            Images[index].Visibility = Visibility.Visible;
+                            Images[index].Source = GreenPawn;
+                            break;
+                        default:
+                            Images[index].Visibility = Visibility.Hidden;
+                            break;
+                    }
+             }
+
+            Back_Button.IsEnabled = false;
+            Move_Button.IsEnabled = true;
+        }
+
+        private void InvalidMove(string message)
+        {
+            if (message == null) return;
+
+            Back_Button.IsEnabled = true;
+            Move_Button.IsEnabled = false;
         }
 
         private void TestLog(string text)
