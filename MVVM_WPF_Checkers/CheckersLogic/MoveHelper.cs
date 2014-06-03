@@ -22,6 +22,23 @@ namespace CheckersLogic
                 }
         }
 
+        public static bool ChangePawnToDame(FieldState[,] boardArray)
+        {
+            for (var i = 0; i < 8; i++)
+                if (boardArray[0, i] == FieldState.YellowPawn || boardArray[7, i] == FieldState.RedPawn)
+                    return true;
+            return false;
+        }
+
+        public static bool ChangedPawns(FieldState[,] boardArray, FieldState[,] previousBoardArray)
+        {
+            for (var i = 0; i < 8; i++)
+                if ((previousBoardArray[7, i] == FieldState.RedPawn && boardArray[7, i] != FieldState.BluePawn) ||
+                    (previousBoardArray[0, i] == FieldState.YellowPawn && boardArray[0, i] != FieldState.GreenPawn))
+                        return false;
+            return true;
+        }
+
         private static void MovePawns(int x, int y, FieldState fieldState, GameState gameState)
         {
             if (fieldState != gameState.CurrentPawn) return;

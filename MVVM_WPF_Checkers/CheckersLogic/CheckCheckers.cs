@@ -28,6 +28,7 @@ namespace CheckersLogic
             CaptureHelper.SetPossibleCapture(_gameState.PreviousBoardArray, _gameState);
             MoveHelper.SetPossibleMoves(_gameState);
             Validete();
+            if (MoveHelper.ChangePawnToDame(_gameState.BoardArray)) return;        
             if (_playerCapture)
             {
                 CaptureHelper.SetPossibleCapture(_gameState.BoardArray, _gameState);
@@ -46,6 +47,18 @@ namespace CheckersLogic
         private void Validete()
         {
             _playerCapture = false;
+            if (!MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
+            {
+                SetMessage("Failed Change pawn to dame");
+                IsError = true;
+                return;
+            }
+            if (MoveHelper.ChangePawnToDame(_gameState.PreviousBoardArray) && MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
+            {
+                SetMessage("Changed pawn to dame");
+                IsError = false;
+                return;
+            }
             if (_gameState.PossibleCapture.Any(capture => GetDiff(_gameState.BoardArray, capture).Count == 0))
             {
                 SetMessage("Capture success");
