@@ -31,8 +31,7 @@ namespace CheckersLogic
             if (_playerCapture)
             {
                 CaptureHelper.SetPossibleCapture(_gameState.BoardArray, _gameState);
-                if (_gameState.PossibleCapture.Any())
-                    return;
+                if (_gameState.PossibleCapture.Any()) return;
             }
             if (!IsError)
                 _gameState.UpdateCurrentPlayer();
