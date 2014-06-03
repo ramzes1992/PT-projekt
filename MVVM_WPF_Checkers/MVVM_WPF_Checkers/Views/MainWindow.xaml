@@ -6,6 +6,7 @@
         mc:Ignorable="d"
 		xmlns:viewModels="clr-namespace:MVVM_WPF_Checkers.ViewModels"
         xmlns:converters="clr-namespace:MVVM_WPF_Checkers.Converters"
+        xmlns:RangeSlider="clr-namespace:MVVM_WPF_Checkers.Views"
         Title="Checkers App"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
@@ -15,13 +16,14 @@
         <viewModels:MainWindowViewModel x:Key="MainViewModel" />
         <converters:FieldsStatesCollectionToImagesCollectionConverter x:Key="FieldsStatesCollectionToImagesCollectionConverter"/>
         <converters:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter"/>
+        <converters:IntToDoubleConverter x:Key="IntToDoubleConverter"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource MainViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Menu>
             <MenuItem Header="Program">
                 <MenuItem Header="Run WebCam" Command="{Binding RunWebCamCommand}"/>
@@ -29,32 +31,173 @@
             </MenuItem>
         </Menu>
 
+        <TabControl Grid.Row="1">
+            <TabItem Header="Strona główna">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Image Source="{Binding TmpImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="250" Height="250" Stretch="Uniform"/>
+                        <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="320" Height="240" Stretch="Uniform"/>
+                    </StackPanel>
 
-            <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="320" Height="240" Stretch="Uniform"/>
-            
-            <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
-            <ListBox ItemsSource="{Binding Board, Converter={StaticResource FieldsStatesCollectionToImagesCollectionConverter}}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionMode="Single">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" ItemHeight="43" ItemWidth="43" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="346" MaxWidth="364">
-                            <WrapPanel.Resources>
-                                <Style TargetType="Image">
-                                    <Setter Property="Width" Value="30" />
-                                    <Setter Property="Height" Value="30" />
-                                    <Setter Property="Margin" Value="0" />
-                                </Style>
-                            </WrapPanel.Resources>
-                        </WrapPanel>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
+                    <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
+                    <ListBox ItemsSource="{Binding Board, Converter={StaticResource FieldsStatesCollectionToImagesCollectionConverter}}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionMode="Single">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" ItemHeight="43" ItemWidth="43" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="346" MaxWidth="364">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Width" Value="30" />
+                                            <Setter Property="Height" Value="30" />
+                                            <Setter Property="Margin" Value="0" />
+                                        </Style>
+                                    </WrapPanel.Resources>
+                                </WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
 
-        </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Kalibracja - wymiary">
+                <Grid>
+                    <Image Source="{Binding ImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="640" Height="480" Stretch="Uniform" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Poziome-->
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,300,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,360,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,420,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="1" Width="480" Fill="Red" Margin="0,480,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Pionowe-->
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="0,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="60,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="120,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="180,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="240,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="300,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="360,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="420,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+                    <Rectangle Height="480" Width="1" Fill="Red" Margin="480,0,0,0" VerticalAlignment="top" HorizontalAlignment="Left"/>
+
+
+                    <!--Kolory-->
+                    <!--Czerwony-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Zielony-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Niebieski-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,170,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Żółty-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Biały-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,330,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                    <!--Czarny-->
+                    <Border BorderThickness="1" BorderBrush="White" Height="60" Width="140" Margin="490,410,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Kalibracja - kolory">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="{Binding TmpImageFrame, Converter={StaticResource BitmapToImageSourceConverter}}" Width="350" Height="350" Stretch="Uniform"/>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Button Height="20" Width="Auto" Content="Start Calibration" Command="{Binding RunCalibrationCommand}"/>
+                        <Button Height="20" Width="Auto" Content="Stop Calibration" Command="{Binding StopCalibrationCommand}" Name="v_Button_StopCalibration"/>
+                    </StackPanel>
+
+
+                    <StackPanel VerticalAlignment="Bottom" Margin="0,10,0,10">
+                        <TextBlock Text="Deviation"/>
+                        <TextBlock Text="{Binding ElementName=v_Slider_Deviation, Path=Value}" FontSize="20"/>
+                        <Slider Name="v_Slider_Deviation" Height="15" Width="300" Minimum="0" Maximum="255" Value="{Binding Deviation, Mode=TwoWay}" IsEnabled="{Binding  ElementName=v_Button_StopCalibration, Path=IsEnabled}"/>
+                    </StackPanel>
+
+                    <Viewbox Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Stretch="Uniform" ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                        <StackPanel >
+                            <!-- Red -->
+                            <Label Content="Red"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding RedR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding RedG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding RedB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding RedRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+
+                            <!-- Green -->
+                            <Label Content="Green"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding GreenR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding GreenG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding GreenB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding GreenRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+
+
+                            <!-- Blue -->
+                            <Label Content="Blue"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding BlueR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlueG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlueB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding BlueRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+
+
+                            <!-- Yellow -->
+                            <Label Content="Yellow"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding YellowR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding YellowG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding YellowB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding YellowRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+
+
+                            <!-- White -->
+                            <Label Content="White"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding WhiteR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding WhiteG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding WhiteB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding WhiteRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+
+
+                            <!-- Black -->
+                            <Label Content="Black"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding BlackR, StringFormat=R:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlackG, StringFormat=G:{0:0}}" Margin="6,0"/>
+                                <TextBlock Text="{Binding BlackB, StringFormat=B:{0:0}}" Margin="6,0"/>
+                            </StackPanel>
+                            <Image Grid.Column="0" Width="140" Height="60" Source="{Binding BlackRectangleFrame, Converter={StaticResource BitmapToImageSourceConverter}}"/>
+                            
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
