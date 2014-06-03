@@ -16,7 +16,6 @@ namespace CheckersLogic
                     CapturePawns(boardState, i, j, gameState);
                     CaptureDames(boardState, i, j, gameState);
                 }
-            ConsoleHelper.ShowNotEmptyMovesContent(gameState.PossibleCapture);
         }
 
         private static void CapturePawns(FieldState[,] boardState, int x, int y, GameState gameState)

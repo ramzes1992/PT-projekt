@@ -25,5 +25,13 @@ namespace CheckersLogic
                 ShowNotEmptyBoardContent(board);
             }
         }
+
+        public static void ShowBoardChanges(string message, List<Pawn> pawns)
+        {
+            Console.WriteLine(message);
+            foreach (var pawn in pawns)
+                Console.WriteLine(pawn);
+            Console.WriteLine("----------------------");
+        }
     }
 }

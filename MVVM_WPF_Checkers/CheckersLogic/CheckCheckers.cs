@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CheckersLogic.Models;
 using MVVM_WPF_Checkers.Models;
@@ -20,6 +21,8 @@ namespace CheckersLogic
         public void InitBoard(FieldState[,] boardArray)
         {
             _gameState = new GameState(boardArray);
+            Console.WriteLine("Init new Board");
+            Console.WriteLine("Current player: {0}", _gameState.CurrentPlayer + 1);
         }
 
         public void UpdateBoard(FieldState[,] boardArray)
@@ -36,6 +39,7 @@ namespace CheckersLogic
             }
             if (!IsError)
                 _gameState.UpdateCurrentPlayer();
+            Console.WriteLine("Current player: {0}", _gameState.CurrentPlayer + 1);
         }
 
         public FieldState[,] GetCorrectBoard()
@@ -49,8 +53,10 @@ namespace CheckersLogic
             _playerCapture = false;
             if (!MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
             {
-                SetMessage("Failed Change pawn to dame");
+                const string message = "Failed Change pawn to dame";
+                SetMessage(message);
                 IsError = true;
+                ConsoleHelper.ShowBoardChanges(message, GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
                 return;
             }
             if (MoveHelper.ChangePawnToDame(_gameState.PreviousBoardArray) && MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
@@ -68,8 +74,10 @@ namespace CheckersLogic
             }
             if (_gameState.PossibleCapture.Any())
             {
+                const string message = "Obligatory Capture";
                 SetMessage("Obligatory Capture");
                 IsError = true;
+                ConsoleHelper.ShowBoardChanges(message, GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
                 return;
             }
             if (_gameState.PossibleMoves.Any(move => GetDiff(_gameState.BoardArray, move).Count == 0))
@@ -80,6 +88,7 @@ namespace CheckersLogic
             }
             SetMessage("Invalid move");
             IsError = true;
+            ConsoleHelper.ShowBoardChanges("Invalid move", GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
         }
 
         private void SetMessage(string message)

@@ -8,9 +8,6 @@ namespace CheckersLogic
     {
         public static void SetPossibleMoves(GameState gameState)
         {
-            Console.WriteLine("SetPossibleMoves");
-            Console.WriteLine("Current player: {0}", gameState.CurrentPlayer);
-
             gameState.PossibleMoves.Clear();
 
             for (var i = 0; i < 8; i++)
