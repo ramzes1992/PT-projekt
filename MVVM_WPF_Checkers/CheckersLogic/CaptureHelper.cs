@@ -22,55 +22,34 @@ namespace CheckersLogic
         private static void CapturePawns(FieldState[,] boardState, int x, int y, GameState gameState)
         {
             if (boardState[x, y] != gameState.CurrentPawn) return;
-            CapturePawn(boardState, x, y, 1, 1, gameState);
-            CapturePawn(boardState, x, y, 1, -1, gameState);
-            CapturePawn(boardState, x, y, -1, -1, gameState);
-            CapturePawn(boardState, x, y, -1, 1, gameState);
+            CapturePawn(boardState, x, y, 1, 1, gameState, gameState.CurrentPawn);
+            CapturePawn(boardState, x, y, 1, -1, gameState, gameState.CurrentPawn);
+            CapturePawn(boardState, x, y, -1, -1, gameState, gameState.CurrentPawn);
+            CapturePawn(boardState, x, y, -1, 1, gameState, gameState.CurrentPawn);
         }
 
         private static void CaptureDames(FieldState[,] boardState, int x, int y, GameState gameState)
         {
             if (boardState[x, y] != gameState.CurrentDame) return;
-            for (var i = 0; i < 8; i++) CaptureDame(boardState, x, y, i, i, gameState);
-            for (var i = 0; i < 8; i++) CaptureDame(boardState, x, y, i, -i, gameState);
-            for (var i = 0; i < 8; i++) CaptureDame(boardState, x, y, -i, -i, gameState);
-            for (var i = 0; i < 8; i++) CaptureDame(boardState, x, y, - i, i, gameState);
+            for (var i = 0; i < 8; i++) CapturePawn(boardState, x, y, i, i, gameState, gameState.CurrentDame);
+            for (var i = 0; i < 8; i++) CapturePawn(boardState, x, y, i, -i, gameState, gameState.CurrentDame);
+            for (var i = 0; i < 8; i++) CapturePawn(boardState, x, y, -i, -i, gameState, gameState.CurrentDame);
+            for (var i = 0; i < 8; i++) CapturePawn(boardState, x, y, -i, i, gameState, gameState.CurrentDame);
         }
 
-        private static void CapturePawn(FieldState[,] boardState, int currentX, int currentY, int moveX, int moveY, GameState gameState)
+        private static void CapturePawn(FieldState[,] boardState, int currentX, int currentY, int moveX, int moveY, GameState gameState, FieldState currentPawnType)
         {
             var opponentPawnX = currentX + moveX;
             var opponentPawnY = currentY + moveY;
             var opponentPawn = gameState.CurrentPawn == FieldState.RedPawn ? FieldState.YellowPawn : FieldState.RedPawn;
+            var opponentDame = gameState.CurrentDame == FieldState.BluePawn ? FieldState.GreenPawn : FieldState.BluePawn;
             var newX = currentX + (moveX > 0 ? moveX + 1 : moveX - 1);
             var newY = currentY + (moveY > 0 ? moveY + 1 : moveY - 1);
 
-            if ((boardState[currentX, currentY] != gameState.CurrentPawn) ||
+            if ((boardState[currentX, currentY] != currentPawnType) ||
                 (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) ||
                 (newX < 0 || newX > 7 || newY < 0 || newY > 7) ||
-                (boardState[opponentPawnX, opponentPawnY] != opponentPawn) ||
-                (boardState[newX, newY] != FieldState.Empty))
-                return;
-
-            var tmpBoard = (FieldState[,])boardState.Clone();
-            tmpBoard[newX, newY] = tmpBoard[currentX, currentY];
-            tmpBoard[currentX, currentY] = FieldState.Empty;
-            tmpBoard[opponentPawnX, opponentPawnY] = FieldState.Empty;
-            gameState.PossibleCapture.Add(tmpBoard);
-        }
-
-        private static void CaptureDame(FieldState[,] boardState, int currentX, int currentY, int moveX, int moveY, GameState gameState)
-        {
-            var opponentPawnX = currentX + moveX;
-            var opponentPawnY = currentY + moveY;
-            var opponentPawn = gameState.CurrentDame == FieldState.BluePawn ? FieldState.GreenPawn: FieldState.BluePawn;
-            var newX = currentX + (moveX > 0 ? moveX + 1 : moveX - 1);
-            var newY = currentY + (moveY > 0 ? moveY + 1 : moveY - 1);
-
-            if ((boardState[currentX, currentY] != gameState.CurrentDame) ||
-                (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) ||
-                (newX < 0 || newX > 7 || newY < 0 || newY > 7) ||
-                (boardState[opponentPawnX, opponentPawnY] != opponentPawn) ||
+                !((boardState[opponentPawnX, opponentPawnY] == opponentPawn) || (boardState[opponentPawnX, opponentPawnY] == opponentDame)) ||
                 (boardState[newX, newY] != FieldState.Empty))
                 return;
 
