@@ -9,7 +9,7 @@ namespace CheckersLogic.Models
         public FieldState CurrentPawn;
         public FieldState CurrentDame;
         public List<FieldState[,]> PossibleMoves;
-        public List<Capture> PossibleCapture;
+        public List<FieldState[,]> PossibleCapture;
         private int _currentPlayer;
         public FieldState[,] PreviousBoardArray;
         private FieldState[,] _boardArray;
@@ -47,7 +47,7 @@ namespace CheckersLogic.Models
             BoardArray = new FieldState[8, 8];
             PreviousBoardArray = new FieldState[8, 8];
             PossibleMoves = new List<FieldState[,]>();
-            PossibleCapture = new List<Capture>();
+            PossibleCapture = new List<FieldState[,]>();
             CurrentPlayer = 0;
             CurrentPawn = FieldState.RedPawn;
             CurrentDame = FieldState.BluePawn;
@@ -57,7 +57,7 @@ namespace CheckersLogic.Models
         {
             BoardArray = boardArray;
             PossibleMoves = new List<FieldState[,]>();
-            PossibleCapture = new List<Capture>();
+            PossibleCapture = new List<FieldState[,]>();
             CurrentPlayer = 0;
             CurrentPawn = FieldState.RedPawn;
             CurrentDame = FieldState.BluePawn;
@@ -66,7 +66,7 @@ namespace CheckersLogic.Models
         public void Restore()
         {
             _boardArray = PreviousBoardArray;
-            UpdateCurrentPlayer();
+            //UpdateCurrentPlayer();
         }
 
         public void UpdateCurrentPlayer()

@@ -12,46 +12,41 @@ namespace CheckersLogic
             for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
-                    CapturePawns(boardState, 0, i, j, gameState);
+                    CapturePawns(boardState, i, j, gameState);
                     //MoveDames(i, j, fieldState);
                 }
+            ConsoleHelper.ShowNotEmptyMovesContent(gameState.PossibleCapture);
         }
 
-        private static void CapturePawns(FieldState[,] boardState, int counter, int x, int y, GameState gameState)
+        private static void CapturePawns(FieldState[,] boardState, int x, int y, GameState gameState)
         {
             if (boardState[x, y] != gameState.CurrentPawn) return;
-            CapturePawn(boardState, counter, x, y, 1, 1, gameState);
-            CapturePawn(boardState, counter, x, y, 1, -1, gameState);
-            CapturePawn(boardState, counter, x, y, -1, -1, gameState);
-            CapturePawn(boardState, counter, x, y, -1, 1, gameState);
+            CapturePawn(boardState, x, y, 1, 1, gameState);
+            CapturePawn(boardState, x, y, 1, -1, gameState);
+            CapturePawn(boardState, x, y, -1, -1, gameState);
+            CapturePawn(boardState, x, y, -1, 1, gameState);
         }
 
-        private static void CapturePawn(FieldState[,] boardState, int counter, int currentX, int currentY, int moveX, int moveY, GameState gameState)
+        private static void CapturePawn(FieldState[,] boardState, int currentX, int currentY, int moveX, int moveY, GameState gameState)
         {
-
             var opponentPawnX = currentX + moveX;
             var opponentPawnY = currentY + moveY;
             var opponentPawn = gameState.CurrentPawn == FieldState.RedPawn ? FieldState.YellowPawn : FieldState.RedPawn;
             var newX = currentX + (2 * moveX);
             var newY = currentY + (2 * moveY);
 
-            if (
-                (boardState[currentX, currentY] != gameState.CurrentPawn) ||
+            if ((boardState[currentX, currentY] != gameState.CurrentPawn) ||
                 (opponentPawnX < 0 || opponentPawnX > 7 || opponentPawnY < 0 || opponentPawnY > 7) ||
                 (newX < 0 || newX > 7 || newY < 0 || newY > 7) ||
                 (boardState[opponentPawnX, opponentPawnY] != opponentPawn) ||
-                (boardState[newX, newY] != FieldState.Empty)
-                )
-            {
-                if (counter > 0) gameState.PossibleCapture.Add(new Capture(counter, boardState));
+                (boardState[newX, newY] != FieldState.Empty))
                 return;
-            }
 
             var tmpBoard = (FieldState[,])boardState.Clone();
             tmpBoard[newX, newY] = tmpBoard[currentX, currentY];
             tmpBoard[currentX, currentY] = FieldState.Empty;
             tmpBoard[opponentPawnX, opponentPawnY] = FieldState.Empty;
-            CapturePawns(tmpBoard, ++counter, newX, newY, gameState);
-        }         
+            gameState.PossibleCapture.Add(tmpBoard);
+        }
     }
 }

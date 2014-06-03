@@ -7,9 +7,9 @@ using MVVM_WPF_Checkers.Models;
 
 namespace TestBoard_WPF
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private readonly CheckersLogic.CheckersLogic _testCheckersLogic;
+        private readonly CheckersLogic.CheckCheckers _checkCheckers;
         private string _messageLog;
         private int _messageLogCounter;
 
@@ -18,7 +18,7 @@ namespace TestBoard_WPF
             InitializeComponent();
             Images = new ObservableCollection<Image>();
             v_ListBox_Board.DataContext = Images;
-            _testCheckersLogic = new CheckersLogic.CheckersLogic();
+            _checkCheckers = new CheckersLogic.CheckCheckers();
         }
 
         public ObservableCollection<Image> Images { get; private set; }
@@ -34,7 +34,7 @@ namespace TestBoard_WPF
                 for (var j = 0; j < 8; j++)
                 {
                     var tag = new Tuple<int, int>(i, j);
-                    Images.Add(new Image() { Visibility = System.Windows.Visibility.Hidden, Tag = tag });
+                    Images.Add(new Image { Visibility = Visibility.Hidden, Tag = tag });
                 }
         }
 
@@ -102,10 +102,8 @@ namespace TestBoard_WPF
 
         private void Button_SetInit_Click(object sender, RoutedEventArgs e)
         {
-            _testCheckersLogic.InitBoard(boardArrayToFieldState());
-            TestLog("Init Ready");
-            Move_Button.IsEnabled = true;
-            Back_Button.IsEnabled = false;
+            _checkCheckers.InitBoard(boardArrayToFieldState());
+            InitConfiguration();
         }
 
         private void Button_Init_Click(object sender, RoutedEventArgs e)
@@ -117,8 +115,13 @@ namespace TestBoard_WPF
             DrawPawnsLine(5, 1, 2, YellowPawn);
             DrawPawnsLine(6, 0, 2, YellowPawn);
             DrawPawnsLine(7, 1, 2, YellowPawn);
-            _testCheckersLogic.InitBoard(boardArrayToFieldState());
-            TestLog(_testCheckersLogic.InitialValid());
+            _checkCheckers.InitBoard(boardArrayToFieldState());
+            TestLog(_checkCheckers.InitialValid());
+            InitConfiguration();
+        }
+
+        private void InitConfiguration()
+        {
             TestLog("Init Ready");
             Move_Button.IsEnabled = true;
             Back_Button.IsEnabled = false;
@@ -160,10 +163,10 @@ namespace TestBoard_WPF
         private void Button_Move_Click(object sender, RoutedEventArgs e)
         {
             var board = boardArrayToFieldState();
-            _testCheckersLogic.UpdateBoard(board);
-            var validateMessage = _testCheckersLogic.Validete();
-            InvalidMove(validateMessage);
-            TestLog(validateMessage);
+            _checkCheckers.UpdateBoard(board);
+            //_checkCheckers.Validete();
+            InvalidMove(_checkCheckers.IsError);
+            TestLog(_checkCheckers.Message);
         }
 
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
@@ -174,7 +177,7 @@ namespace TestBoard_WPF
         private void Button_Back_Click(object sender, RoutedEventArgs e)
         {
 
-            var array = _testCheckersLogic.GetCorrectBoard();
+            var array = _checkCheckers.GetCorrectBoard();
             for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
@@ -213,9 +216,9 @@ namespace TestBoard_WPF
             TestLog("Back");
         }
 
-        private void InvalidMove(string message)
+        private void InvalidMove(bool isError)
         {
-            if (message == null) return;
+            if (!isError) return;
 
             Back_Button.IsEnabled = true;
             Move_Button.IsEnabled = false;

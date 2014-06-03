@@ -43,7 +43,7 @@
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Models\Capture.cs" />
     <Compile Include="Models\FieldsState.cs" />
-    <Compile Include="CheckersLogic.cs" />
+    <Compile Include="CheckCheckers.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Pawn.cs" />
     <Compile Include="MoveHelper.cs" />

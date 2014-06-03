@@ -20,7 +20,7 @@ namespace CheckersLogic
                     MovePawns(i, j, fieldState, gameState);
                     MoveDames(i, j, fieldState, gameState);
                 }
-            ConsoleHelper.ShowNotEmptyMovesContent(gameState.PossibleMoves);
+            //ConsoleHelper.ShowNotEmptyMovesContent(gameState.PossibleMoves);
         }
 
         private static void MovePawns(int x, int y, FieldState fieldState, GameState gameState)

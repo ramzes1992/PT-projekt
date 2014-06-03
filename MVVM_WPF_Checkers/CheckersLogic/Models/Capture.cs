@@ -4,12 +4,10 @@ namespace CheckersLogic
 {
     public class Capture
     {
-        public int CaptureLength { get; set; }
         public FieldState[,] BoardState { get; set; }
 
-        public Capture(int captureLength, FieldState[,] boardState)
+        public Capture(FieldState[,] boardState)
         {
-            CaptureLength = captureLength;
             BoardState = boardState;
         }
     }

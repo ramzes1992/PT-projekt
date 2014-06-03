@@ -5,11 +5,14 @@ using MVVM_WPF_Checkers.Models;
 
 namespace CheckersLogic
 {
-    public class CheckersLogic
+    public class CheckCheckers
     {
         private GameState _gameState;
+        public string Message;
+        public bool IsError;
+        private bool _playerCapture;
 
-        public CheckersLogic()
+        public CheckCheckers()
         {
             _gameState = new GameState();
         }
@@ -24,7 +27,15 @@ namespace CheckersLogic
             _gameState.BoardArray = boardArray;
             CaptureHelper.SetPossibleCapture(_gameState.PreviousBoardArray, _gameState);
             MoveHelper.SetPossibleMoves(_gameState);
-            _gameState.UpdateCurrentPlayer();
+            Validete();
+            if (_playerCapture)
+            {
+                CaptureHelper.SetPossibleCapture(_gameState.BoardArray, _gameState);
+                if (_gameState.PossibleCapture.Any())
+                    return;
+            }
+            if (!IsError)
+                _gameState.UpdateCurrentPlayer();
         }
 
         public FieldState[,] GetCorrectBoard()
@@ -33,14 +44,35 @@ namespace CheckersLogic
             return _gameState.BoardArray;
         }
 
-        public string Validete()
+        private void Validete()
         {
-            if (_gameState.PossibleCapture.Any(capture => GetDiff(_gameState.BoardArray, capture.BoardState).Count == 0))
-                return null;
+            _playerCapture = false;
+            if (_gameState.PossibleCapture.Any(capture => GetDiff(_gameState.BoardArray, capture).Count == 0))
+            {
+                SetMessage("Capture success");
+                IsError = false;
+                _playerCapture = true;
+                return;
+            }
             if (_gameState.PossibleCapture.Any())
-                return "Obligatory capture";
+            {
+                SetMessage("Obligatory Capture");
+                IsError = true;
+                return;
+            }
+            if (_gameState.PossibleMoves.Any(move => GetDiff(_gameState.BoardArray, move).Count == 0))
+            {
+                SetMessage("Move Success");
+                IsError = false;
+                return;
+            }
+            SetMessage("Invalid move");
+            IsError = true;
+        }
 
-            return _gameState.PossibleMoves.Any(move => GetDiff(_gameState.BoardArray, move).Count == 0) ? null : "Invalid move";
+        private void SetMessage(string message)
+        {
+            Message = string.Format("Player{0}- {1}", _gameState.CurrentPlayer + 1, message);
         }
 
         public string InitialValid()
