@@ -106,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CheckersLogic\CheckersLogic.csproj">
-      <Project>{A6AB6FD9-829D-41B8-9DBA-FEC3A5569AEE}</Project>
+      <Project>{a6ab6fd9-829d-41b8-9dba-fec3a5569aee}</Project>
       <Name>CheckersLogic</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVVM_WPF_Checkers\MVVM_WPF_Checkers.csproj">

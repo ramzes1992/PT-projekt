@@ -4,12 +4,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using MVVM_WPF_Checkers.Models;
+using CheckersLogic;
 
 namespace TestBoard_WPF
 {
     public partial class MainWindow
     {
-        private readonly CheckersLogic.CheckCheckers _checkCheckers;
+        private readonly CheckCheckers _checkCheckers;
         private string _messageLog;
         private int _messageLogCounter;
 
@@ -18,7 +19,7 @@ namespace TestBoard_WPF
             InitializeComponent();
             Images = new ObservableCollection<Image>();
             v_ListBox_Board.DataContext = Images;
-            _checkCheckers = new CheckersLogic.CheckCheckers();
+            _checkCheckers = new CheckCheckers();
         }
 
         public ObservableCollection<Image> Images { get; private set; }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MVVM_WPF_Checkers.Models;
 
-namespace CheckersLogic.Models
+namespace CheckersLogic
 {
     public class GameState
     {

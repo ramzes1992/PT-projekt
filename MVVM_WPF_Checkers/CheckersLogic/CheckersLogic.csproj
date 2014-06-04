@@ -42,12 +42,17 @@
     <Compile Include="CaptureHelper.cs" />
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Models\Capture.cs" />
-    <Compile Include="Models\FieldsState.cs" />
     <Compile Include="CheckCheckers.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Pawn.cs" />
     <Compile Include="MoveHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVM_WPF_Checkers\MVVM_WPF_Checkers.csproj">
+      <Project>{6a23e5ba-99da-47ef-a6fa-87df531e4158}</Project>
+      <Name>MVVM_WPF_Checkers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

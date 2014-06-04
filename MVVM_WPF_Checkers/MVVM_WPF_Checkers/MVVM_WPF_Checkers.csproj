@@ -70,6 +70,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\IntToDoubleConverter.cs" />
+    <Compile Include="Models\FieldsState.cs" />
     <Compile Include="Views\RangeSlider.xaml.cs">
       <DependentUpon>RangeSlider.xaml</DependentUpon>
     </Compile>
@@ -148,15 +149,7 @@
     <Resource Include="Views\Images\testChess1.jpg" />
     <Resource Include="Views\Images\testChess2.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CheckersLogic\CheckersLogic.csproj">
-      <Project>{A6AB6FD9-829D-41B8-9DBA-FEC3A5569AEE}</Project>
-      <Name>CheckersLogic</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
