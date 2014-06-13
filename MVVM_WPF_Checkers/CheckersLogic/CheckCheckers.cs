@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 
 namespace CheckersLogic
 {

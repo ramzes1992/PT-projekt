@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 
 namespace MVVM_WPF_Checkers.Converters
 {

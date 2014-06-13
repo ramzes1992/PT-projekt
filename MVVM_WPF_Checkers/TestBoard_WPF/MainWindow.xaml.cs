@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 using CheckersLogic;
 
 namespace TestBoard_WPF

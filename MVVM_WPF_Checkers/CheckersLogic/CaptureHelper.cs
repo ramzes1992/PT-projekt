@@ -1,5 +1,5 @@
 ﻿using System;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 
 namespace CheckersLogic
 {

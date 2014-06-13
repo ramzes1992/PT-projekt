@@ -1,7 +1,6 @@
 ﻿using System;
-using MVVM_WPF_Checkers.Models;
 
-namespace CheckersLogic
+namespace CheckersLogic.Models
 {
     public class Pawn
     {

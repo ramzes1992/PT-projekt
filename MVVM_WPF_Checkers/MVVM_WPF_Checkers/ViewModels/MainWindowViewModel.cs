@@ -2,11 +2,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MVVM_WPF_Checkers.Helpers;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 using MVVM_WPF_Checkers.Services;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Drawing;
+using CheckersLogic;
 
 namespace MVVM_WPF_Checkers.ViewModels
 {
@@ -28,6 +29,30 @@ namespace MVVM_WPF_Checkers.ViewModels
                 {
                     _board = value;
                     RaisePropertyChanged(() => Board);
+                }
+            }
+        }
+
+        private string _logMessages;
+        public string LogMessages
+        {
+            get
+            {
+                if (_logMessages != null)
+                {
+                    return _logMessages;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            set
+            {
+                if(_logMessages != value)
+                {
+                    _logMessages = value;
+                    RaisePropertyChanged(() => LogMessages);
                 }
             }
         }
@@ -642,6 +667,7 @@ namespace MVVM_WPF_Checkers.ViewModels
         #region Members
         private WebCamService _webCamService;
         private CalibrationService _calibrationService;
+        //private CheckCheckers _logicService;
         #endregion
     }
 }

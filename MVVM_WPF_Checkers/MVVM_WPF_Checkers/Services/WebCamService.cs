@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -926,7 +926,7 @@ namespace MVVM_WPF_Checkers.Services
         #region Constructor
         public WebCamService()
         {
-            capture = new Capture();
+            capture = new Emgu.CV.Capture();
             _syncPropsObject = new object();
             _syncImageObcject = new object();
             CurrentCapture = new Image<Bgr, byte>(640, 480);

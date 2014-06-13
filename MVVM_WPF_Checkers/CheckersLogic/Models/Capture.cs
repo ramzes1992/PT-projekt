@@ -1,6 +1,6 @@
-﻿using MVVM_WPF_Checkers.Models;
+﻿using CheckersLogic.Models;
 
-namespace CheckersLogic
+namespace CheckersLogic.Models
 {
     public class Capture
     {

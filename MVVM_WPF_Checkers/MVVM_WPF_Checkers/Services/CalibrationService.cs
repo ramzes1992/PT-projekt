@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
-using MVVM_WPF_Checkers.Models;
+using CheckersLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,7 +45,7 @@ namespace MVVM_WPF_Checkers.Services
 
         public CalibrationService()
         {
-            _capture = new Capture();
+            _capture = new Emgu.CV.Capture();
             InitializeWorkers();
         }
 

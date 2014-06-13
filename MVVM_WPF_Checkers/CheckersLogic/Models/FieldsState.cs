@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVVM_WPF_Checkers.Models
+namespace CheckersLogic.Models
 {
     public enum FieldState
     {
