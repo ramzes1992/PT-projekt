@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Height="600"
-        Width="800">
+        Width="1000">
     <Window.Resources>
         <viewModels:MainWindowViewModel x:Key="MainViewModel" />
         <converters:FieldsStatesCollectionToImagesCollectionConverter x:Key="FieldsStatesCollectionToImagesCollectionConverter"/>
@@ -35,8 +35,9 @@
             <TabItem Header="Strona główna">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
@@ -45,7 +46,7 @@
                     </StackPanel>
 
                     <Image Grid.Column="1" Source="Images/board.jpg" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Height="350"/>
-                    <ListBox ItemsSource="{Binding Board, Converter={StaticResource FieldsStatesCollectionToImagesCollectionConverter}}" Grid.Column="1" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionMode="Single">
+                    <ListBox Grid.Column="1" ItemsSource="{Binding Board, Converter={StaticResource FieldsStatesCollectionToImagesCollectionConverter}}" Padding="-1" Margin="12,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="346" Height="346" Background="Transparent" SelectionMode="Single">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" ItemHeight="43" ItemWidth="43" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="346" MaxWidth="364">
@@ -61,6 +62,13 @@
                         </ListBox.ItemsPanel>
                     </ListBox>
 
+                    <StackPanel Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <ScrollViewer MaxHeight="250" >
+                            <TextBlock Text="{Binding LogMessages}" HorizontalAlignment="Stretch"/>
+                        </ScrollViewer>
+                        <Button Height="20" Width="Auto" Content="Start Tracking" Command="{Binding StartGameTracking}"/>
+                    </StackPanel>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Kalibracja - wymiary">
@@ -113,7 +121,8 @@
             <TabItem Header="Kalibracja - kolory">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="400"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 

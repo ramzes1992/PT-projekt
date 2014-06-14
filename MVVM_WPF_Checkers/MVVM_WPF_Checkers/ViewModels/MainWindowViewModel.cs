@@ -473,6 +473,7 @@ namespace MVVM_WPF_Checkers.ViewModels
         public ICommand StopWebCamCommand { get { return new DelegateCommand(OnStopWebCam, CanExecuteStopWebCam); } }
         public ICommand RunCalibrationCommand { get { return new DelegateCommand(OnRunCalibration, CanExecuteStartCalibration); } }
         public ICommand StopCalibrationCommand { get { return new DelegateCommand(OnStopCalibration, CanExecuteStopCalibration); } }
+        public ICommand StartGameTracking { get { return new DelegateCommand(OnStartGameTracking, CanExecteStartGameTracking); } }
         #endregion
 
         #region Command Handlers
@@ -528,6 +529,23 @@ namespace MVVM_WPF_Checkers.ViewModels
         {
             return (_calibrationService != null) ? _calibrationService.IsRunning : false;
         }
+
+        private bool isTracking = false;
+        private void OnStartGameTracking()
+        {
+            ////TODO
+            //if (_currentBoard != null)
+            //{
+            //    _logicService.InitBoard(_currentBoard);
+            //    isTracking = true;
+            //}
+        }
+
+        bool isInitialValid = false;
+        private bool CanExecteStartGameTracking()
+        {
+            return isInitialValid;
+        }
         #endregion
 
         #region Constructor
@@ -565,6 +583,13 @@ namespace MVVM_WPF_Checkers.ViewModels
             }
 
             this.Board = tmp;
+            //_currentBoard = board; // TODO
+            //isInitialValid = _logicService.InitialValid(board); //TODO
+
+            if (isTracking)
+            {
+                //_logMessages = _logicService.UpdateBoard(board) + Environment.NewLine + _logMessages; //TODO
+            }
         }
         private void _webCamService_ImageChanged(object sender, System.Drawing.Bitmap image)
         {
@@ -667,7 +692,8 @@ namespace MVVM_WPF_Checkers.ViewModels
         #region Members
         private WebCamService _webCamService;
         private CalibrationService _calibrationService;
-        //private CheckCheckers _logicService;
+        private CheckCheckers _logicService;
+        private FieldState[,] _currentBoard;
         #endregion
     }
 }
