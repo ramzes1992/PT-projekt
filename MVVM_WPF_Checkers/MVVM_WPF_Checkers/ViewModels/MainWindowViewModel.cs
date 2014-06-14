@@ -122,6 +122,24 @@ namespace MVVM_WPF_Checkers.ViewModels
         }
         private int _deviation;
 
+        private bool isInitialValid = false;
+        public bool IsStartTrackingEnable
+        {
+            get
+            {
+                return isTracking ? false : isInitialValid;
+            }
+            set
+            {
+                if (isInitialValid != value)
+                {
+                    isInitialValid = value;
+                    RaisePropertyChanged(() => IsStartTrackingEnable);
+                    CommandManager.InvalidateRequerySuggested();
+                }
+            }
+        }
+
         #region Colours Properties
         private double _redR;
         private double _redG;
@@ -473,7 +491,7 @@ namespace MVVM_WPF_Checkers.ViewModels
         public ICommand StopWebCamCommand { get { return new DelegateCommand(OnStopWebCam, CanExecuteStopWebCam); } }
         public ICommand RunCalibrationCommand { get { return new DelegateCommand(OnRunCalibration, CanExecuteStartCalibration); } }
         public ICommand StopCalibrationCommand { get { return new DelegateCommand(OnStopCalibration, CanExecuteStopCalibration); } }
-        public ICommand StartGameTracking { get { return new DelegateCommand(OnStartGameTracking, CanExecteStartGameTracking); } }
+        public ICommand StartGameTracking { get { return new DelegateCommand(OnStartGameTracking); } }
         #endregion
 
         #region Command Handlers
@@ -538,13 +556,8 @@ namespace MVVM_WPF_Checkers.ViewModels
             {
                 _logicService.InitBoard(_currentBoard);
                 isTracking = true;
+                RaisePropertyChanged(() => IsStartTrackingEnable);
             }
-        }
-
-        bool isInitialValid = false;
-        private bool CanExecteStartGameTracking()
-        {
-            return isInitialValid;
         }
         #endregion
 
@@ -590,13 +603,18 @@ namespace MVVM_WPF_Checkers.ViewModels
 
             if (isTracking && _logicService != null)
             {
-                _logMessages = _logicService.UpdateAndValidBoard(board) + Environment.NewLine + _logMessages; //TODO - DONE
+                string message = _logicService.UpdateAndValidBoard(board);
+                if (!string.IsNullOrWhiteSpace(message))
+                {
+                    LogMessages = message + Environment.NewLine + LogMessages; //TODO - DONE
+                }
             }
             else
             {
                 if (_logicService != null)
                 {
-                    isInitialValid = _logicService.InitAndValid(board); //TODO - DONE
+                    IsStartTrackingEnable = _logicService.InitAndValid(board); //TODO - DONE
+                    CommandManager.InvalidateRequerySuggested();
                 }
             }
         }

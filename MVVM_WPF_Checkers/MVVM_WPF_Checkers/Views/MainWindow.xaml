@@ -63,10 +63,10 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <ScrollViewer MaxHeight="250" >
+                        <ScrollViewer Height="250" >
                             <TextBlock Text="{Binding LogMessages}" HorizontalAlignment="Stretch"/>
                         </ScrollViewer>
-                        <Button Height="20" Width="Auto" Content="Start Tracking" Command="{Binding StartGameTracking}"/>
+                        <Button Height="20" Width="Auto" Content="Start Tracking" Command="{Binding StartGameTracking}" IsEnabled="{Binding IsStartTrackingEnable}"/>
                     </StackPanel>
                     
                 </Grid>
