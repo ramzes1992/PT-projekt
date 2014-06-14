@@ -24,6 +24,30 @@ namespace CheckersLogic
             Console.WriteLine("Current player: {0}", _gameState.CurrentPlayer + 1);
         }
 
+        public bool InitAndValid(FieldState[,] boardArray)
+        {
+            InitBoard(boardArray);
+            return InitialValid();
+        }
+
+        public string UpdateAndValidBoard(FieldState[,] boardArray)
+        {
+            if (!BoardIsNew(boardArray))
+                return IsError ? Message : String.Empty;
+
+            if (IsError && GetDiff(boardArray, _gameState.PreviousBoardArray).Count == 0)
+            {
+                IsError = false;
+                _gameState.Restore();
+                return "Back from Error state";
+            }
+
+            if (!IsError)
+                UpdateBoard(boardArray);
+
+            return IsError ? Message : String.Empty;
+        }
+
         public void UpdateBoard(FieldState[,] boardArray)
         {
             _gameState.BoardArray = boardArray;
@@ -95,19 +119,16 @@ namespace CheckersLogic
             Message = string.Format("Player{0}- {1}", _gameState.CurrentPlayer + 1, message);
         }
 
-        public string InitialValid()
+        private bool InitialValid()
         {
-            if (!(
-                ValidRow(0, 0, FieldState.RedPawn) &&
-                ValidRow(1, 1, FieldState.RedPawn) &&
-                ValidRow(2, 0, FieldState.RedPawn) &&
-                ValidRow(3, 1, FieldState.Empty) &&
-                ValidRow(4, 0, FieldState.Empty) &&
-                ValidRow(5, 1, FieldState.YellowPawn) &&
-                ValidRow(6, 0, FieldState.YellowPawn) &&
-                ValidRow(7, 1, FieldState.YellowPawn)))
-                return "Init failed";
-            return null;
+            return (ValidRow(0, 0, FieldState.RedPawn) &&
+                    ValidRow(1, 1, FieldState.RedPawn) &&
+                    ValidRow(2, 0, FieldState.RedPawn) &&
+                    ValidRow(3, 1, FieldState.Empty) &&
+                    ValidRow(4, 0, FieldState.Empty) &&
+                    ValidRow(5, 1, FieldState.YellowPawn) &&
+                    ValidRow(6, 0, FieldState.YellowPawn) &&
+                    ValidRow(7, 1, FieldState.YellowPawn));
         }
 
         private bool ValidRow(int start, int offset, FieldState pawnType)
@@ -116,6 +137,11 @@ namespace CheckersLogic
                 if (_gameState.BoardArray[start, i] != pawnType)
                     return false;
             return true;
+        }
+
+        private bool BoardIsNew(FieldState[,] boardArray)
+        {
+            return (GetDiff(_gameState.BoardArray, boardArray).Count > 0);
         }
 
         public List<Pawn> GetDiff(FieldState[,] baseArray = null, FieldState[,] compareArray = null)

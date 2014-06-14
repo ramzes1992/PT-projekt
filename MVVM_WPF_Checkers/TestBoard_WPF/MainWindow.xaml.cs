@@ -117,7 +117,6 @@ namespace TestBoard_WPF
             DrawPawnsLine(6, 0, 2, YellowPawn);
             DrawPawnsLine(7, 1, 2, YellowPawn);
             _checkCheckers.InitBoard(boardArrayToFieldState());
-            TestLog(_checkCheckers.InitialValid());
             InitConfiguration();
         }
 
@@ -164,15 +163,20 @@ namespace TestBoard_WPF
         private void Button_Move_Click(object sender, RoutedEventArgs e)
         {
             var board = boardArrayToFieldState();
-            _checkCheckers.UpdateBoard(board);
-            //_checkCheckers.Validete();
-            InvalidMove(_checkCheckers.IsError);
-            TestLog(_checkCheckers.Message);
+            TestLog(_checkCheckers.UpdateAndValidBoard(board));
+            //InvalidMove(_checkCheckers.IsError); // jak ma być powrót do ruchu to nie będzie reseta nigdy
         }
 
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
         {
             Clear();
+        }
+
+        private void Button_InitAndValid_Click(object sender, RoutedEventArgs e)
+        {
+            var initAndValid = _checkCheckers.InitAndValid(boardArrayToFieldState());
+            if (initAndValid) InitConfiguration();
+            TestLog(initAndValid ? "InitAndValid Success" : "InitAndValid Failed");
         }
 
         private void Button_Back_Click(object sender, RoutedEventArgs e)
