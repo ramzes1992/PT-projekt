@@ -533,12 +533,12 @@ namespace MVVM_WPF_Checkers.ViewModels
         private bool isTracking = false;
         private void OnStartGameTracking()
         {
-            ////TODO
-            //if (_currentBoard != null)
-            //{
-            //    _logicService.InitBoard(_currentBoard);
-            //    isTracking = true;
-            //}
+            //TODO
+            if (_currentBoard != null && _logicService != null)
+            {
+                _logicService.InitBoard(_currentBoard);
+                isTracking = true;
+            }
         }
 
         bool isInitialValid = false;
@@ -572,6 +572,8 @@ namespace MVVM_WPF_Checkers.ViewModels
             _calibrationService.YellowPixelsModeChanged += _calibrationService_YellowPixelsModeChanged;
             _calibrationService.WhitePixelsModeChanged += _calibrationService_WhitePixelsModeChanged;
             _calibrationService.BlackPixelsModeChanged += _calibrationService_BlackPixelsModeChanged;
+
+            _logicService = new CheckCheckers();
         }
 
         private void _webCamService_BoardChanged(object sender, FieldState[,] board)
@@ -583,12 +585,19 @@ namespace MVVM_WPF_Checkers.ViewModels
             }
 
             this.Board = tmp;
-            //_currentBoard = board; // TODO
-            //isInitialValid = _logicService.InitialValid(board); //TODO
+            _currentBoard = board;
 
-            if (isTracking)
+
+            if (isTracking && _logicService != null)
             {
-                //_logMessages = _logicService.UpdateBoard(board) + Environment.NewLine + _logMessages; //TODO
+                _logMessages = _logicService.UpdateAndValidBoard(board) + Environment.NewLine + _logMessages; //TODO - DONE
+            }
+            else
+            {
+                if (_logicService != null)
+                {
+                    isInitialValid = _logicService.InitAndValid(board); //TODO - DONE
+                }
             }
         }
         private void _webCamService_ImageChanged(object sender, System.Drawing.Bitmap image)
