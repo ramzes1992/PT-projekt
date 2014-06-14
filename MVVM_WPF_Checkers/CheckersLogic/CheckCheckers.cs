@@ -33,7 +33,7 @@ namespace CheckersLogic
         public string UpdateAndValidBoard(FieldState[,] boardArray)
         {
             if (!BoardIsNew(boardArray))
-                return IsError ? Message : String.Empty;
+                return String.Empty;
 
             if (IsError && GetDiff(boardArray, _gameState.PreviousBoardArray).Count == 0)
             {
