@@ -110,12 +110,12 @@ namespace TestBoard_WPF
         private void Button_Init_Click(object sender, RoutedEventArgs e)
         {
             Clear();
-            DrawPawnsLine(0, 0, 1, RedPawn);
-            DrawPawnsLine(1, 1, 1, RedPawn);
-            DrawPawnsLine(2, 0, 1, RedPawn);
-            DrawPawnsLine(5, 1, 2, YellowPawn);
-            DrawPawnsLine(6, 0, 2, YellowPawn);
-            DrawPawnsLine(7, 1, 2, YellowPawn);
+            DrawPawnsLine(0, 1, 1, RedPawn);
+            DrawPawnsLine(1, 0, 1, RedPawn);
+            DrawPawnsLine(2, 1, 1, RedPawn);
+            DrawPawnsLine(5, 0, 2, YellowPawn);
+            DrawPawnsLine(6, 1, 2, YellowPawn);
+            DrawPawnsLine(7, 0, 2, YellowPawn);
             _checkCheckers.InitBoard(boardArrayToFieldState());
             InitConfiguration();
         }

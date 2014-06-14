@@ -121,14 +121,14 @@ namespace CheckersLogic
 
         private bool InitialValid()
         {
-            return (ValidRow(0, 0, FieldState.RedPawn) &&
-                    ValidRow(1, 1, FieldState.RedPawn) &&
-                    ValidRow(2, 0, FieldState.RedPawn) &&
-                    ValidRow(3, 1, FieldState.Empty) &&
-                    ValidRow(4, 0, FieldState.Empty) &&
-                    ValidRow(5, 1, FieldState.YellowPawn) &&
-                    ValidRow(6, 0, FieldState.YellowPawn) &&
-                    ValidRow(7, 1, FieldState.YellowPawn));
+            return (ValidRow(0, 1, FieldState.RedPawn) &&
+                    ValidRow(1, 0, FieldState.RedPawn) &&
+                    ValidRow(2, 1, FieldState.RedPawn) &&
+                    ValidRow(3, 0, FieldState.Empty) &&
+                    ValidRow(4, 1, FieldState.Empty) &&
+                    ValidRow(5, 0, FieldState.YellowPawn) &&
+                    ValidRow(6, 1, FieldState.YellowPawn) &&
+                    ValidRow(7, 0, FieldState.YellowPawn));
         }
 
         private bool ValidRow(int start, int offset, FieldState pawnType)
