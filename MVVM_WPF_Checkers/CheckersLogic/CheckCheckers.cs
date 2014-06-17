@@ -39,13 +39,13 @@ namespace CheckersLogic
             {
                 IsError = false;
                 _gameState.Restore();
-                return "Back from Error state";
+                return "Now is OK";
             }
 
             if (!IsError)
                 UpdateBoard(boardArray);
 
-            return IsError ? Message : String.Empty;
+            return Message;
         }
 
         public void UpdateBoard(FieldState[,] boardArray)
@@ -76,47 +76,48 @@ namespace CheckersLogic
             _playerCapture = false;
             if (!MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
             {
+                IsError = true;
                 const string message = "Failed Change pawn to dame";
                 SetMessage(message);
-                IsError = true;
                 ConsoleHelper.ShowBoardChanges(message, GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
                 return;
             }
             if (MoveHelper.ChangePawnToDame(_gameState.PreviousBoardArray) && MoveHelper.ChangedPawns(_gameState.BoardArray, _gameState.PreviousBoardArray))
             {
-                SetMessage("Changed pawn to dame");
                 IsError = false;
+                SetMessage("Changed pawn to dame");
                 return;
             }
             if (_gameState.PossibleCapture.Any(capture => GetDiff(_gameState.BoardArray, capture).Count == 0))
             {
-                SetMessage("Capture success");
                 IsError = false;
+                SetMessage("Capture success");
                 _playerCapture = true;
                 return;
             }
             if (_gameState.PossibleCapture.Any())
             {
+                IsError = true;
                 const string message = "Obligatory Capture";
                 SetMessage("Obligatory Capture");
-                IsError = true;
                 ConsoleHelper.ShowBoardChanges(message, GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
                 return;
             }
             if (_gameState.PossibleMoves.Any(move => GetDiff(_gameState.BoardArray, move).Count == 0))
             {
-                SetMessage("Move Success");
                 IsError = false;
+                SetMessage("Move Success");
                 return;
             }
-            SetMessage("Invalid move");
             IsError = true;
+            SetMessage("Invalid move");
             ConsoleHelper.ShowBoardChanges("Invalid move", GetDiff(_gameState.BoardArray, _gameState.PreviousBoardArray));
         }
 
         private void SetMessage(string message)
         {
-            Message = string.Format("Player{0}- {1}", _gameState.CurrentPlayer + 1, message);
+            var state = IsError ? "Error" : "OK";
+            Message = string.Format("{0}: Player{1}- {2}", state, _gameState.CurrentPlayer + 1, message);
         }
 
         private bool InitialValid()

@@ -31,7 +31,7 @@ namespace TestBoard_WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i < 8; i++)//64 fiels on board
+            for (var i = 0; i < 8; i++)
                 for (var j = 0; j < 8; j++)
                 {
                     var tag = new Tuple<int, int>(i, j);
@@ -74,7 +74,7 @@ namespace TestBoard_WPF
                     break;
             }
 
-            v_ListBox_Board.SelectionChanged -= v_ListBox_Board_SelectionChanged;// umożliwia klikanie kilka razy w to samo pole
+            v_ListBox_Board.SelectionChanged -= v_ListBox_Board_SelectionChanged;
             v_ListBox_Board.SelectedItem = null;
             v_ListBox_Board.SelectionChanged += v_ListBox_Board_SelectionChanged;
         }
@@ -164,7 +164,6 @@ namespace TestBoard_WPF
         {
             var board = boardArrayToFieldState();
             TestLog(_checkCheckers.UpdateAndValidBoard(board));
-            //InvalidMove(_checkCheckers.IsError); // jak ma być powrót do ruchu to nie będzie reseta nigdy
         }
 
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
